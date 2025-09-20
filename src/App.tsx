@@ -1,30 +1,61 @@
 import { Route, Routes } from 'react-router-dom';
-// import MainLayout from './layout/main-layout/main-layout';
 import Home from './pages/home/home';
-import Dashboard from './pages/admin/dashboard';
+import Dashboard from './pages/admin/admin-dashboard';
 import AdminLayout from './layout/admin-layout/admin-layout';
 import Login from './pages/auth/login';
-import Seller from './pages/seller/seller';
-import AntdProvider from './providers/antd-provider';
+import Seller from './pages/seller/seller-dashboard';
+import Unauthorized from './pages/unauth/unauthorized';
+import ProtectedRoute from './private/protected-route';
+import SellerLayout from './layout/seller-layout/seller-layout';
+import MainLayout from './layout/main-layout/main-layout';
+import AntdProvider from './provider/config-provider';
+import NotFound from './pages/not-found/not-found';
 
 function App() {
   return (
-    <>
-      <AntdProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+    <AntdProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-          {/* admin */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-          </Route>
+        {/* admin */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
 
-          {/* seller */}
-          <Route path="/seller" element={<Seller />} />
-        </Routes>
-      </AntdProvider>
-    </>
+        {/* seller */}
+        <Route
+          path="/seller"
+          element={
+            <ProtectedRoute roles={['seller']}>
+              <SellerLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Seller />} />
+        </Route>
+
+        {/* pages */}
+        <Route path="/" element={<MainLayout />}>
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </AntdProvider>
   );
 }
 
