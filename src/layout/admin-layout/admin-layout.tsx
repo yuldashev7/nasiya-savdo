@@ -8,6 +8,8 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import LogOutIcon from '../../assets/icons/log-out-icon';
 
 const { Header, Sider, Content } = Layout;
 
@@ -16,6 +18,7 @@ const AdminLayout = () => {
   const removeToken = () => {
     localStorage.removeItem('token');
     navigate('/login');
+    toast.success('Tizimdan muvaffaqiyatli chiqdingiz', { autoClose: 1500 });
   };
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -31,10 +34,7 @@ const AdminLayout = () => {
         breakpoint="lg"
         onBreakpoint={(broken) => setCollapsed(broken)}
       >
-        <div
-          className="demo-logo-vertical"
-          style={{ height: 64, margin: 16 }}
-        />
+        <div />
         <Menu
           theme="dark"
           mode="inline"
@@ -63,7 +63,16 @@ const AdminLayout = () => {
             onClick={() => setCollapsed(!collapsed)}
             style={{ fontSize: '16px', width: 64, height: 64 }}
           />
-          <Button danger onClick={removeToken}>
+          <Button
+            danger
+            onClick={removeToken}
+            style={{
+              marginRight: '30px',
+              paddingTop: '18px',
+              paddingBottom: '18px',
+            }}
+          >
+            <LogOutIcon />
             LogOut
           </Button>
         </Header>

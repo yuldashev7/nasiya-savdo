@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import z from 'zod';
 import React from 'react';
 import logo from '../../assets/images/LOGO.png';
+import { toast } from 'react-toastify';
 type FieldType = {
   username?: string;
   password?: string;
@@ -52,8 +53,10 @@ const Login = () => {
     localStorage.setItem('token', JSON.stringify(fakeUser));
 
     if (fakeUser.role === 'admin') {
+      toast.success('Tizimga muvaffaqiyatli kirdingiz!', { autoClose: 1500 });
       return navigate('/admin/dashboard', { replace: true });
     } else if (fakeUser.role === 'seller') {
+      toast.success('Tizimga muvaffaqiyatli kirdingiz!', { autoClose: 1500 });
       return navigate('/seller', { replace: true });
     } else {
       navigate('/', { replace: true });
@@ -114,7 +117,7 @@ const Login = () => {
         <div className="text-center mt-4 max-w-md">
           <p className="text-sm leading-[140%] text-gray-600">
             Hisobingiz yo'q bo'lsa, tizimga kirish huquqini olish uchun
-            <a className="underline text-primary ml-1" href="#">
+            <a className="underline text-primary ml-1 mr-1" href="#">
               do'kon administratori
             </a>
             bilan bog'laning.
