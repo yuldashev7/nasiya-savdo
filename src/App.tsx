@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/home/home';
 import Dashboard from './pages/admin/admin-dashboard';
 import AdminLayout from './layout/admin-layout/admin-layout';
-import Login from './pages/auth/login';
+import Login from './pages/auth/login/login';
 import Seller from './pages/seller/seller-dashboard';
 import Unauthorized from './pages/unauth/unauthorized';
 import ProtectedRoute from './private/protected-route';

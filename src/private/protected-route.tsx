@@ -7,14 +7,14 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
-  const raw = localStorage.getItem('token');
-  const token = raw ? JSON.parse(raw) : null;
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
 
   if (!token) {
     return <Navigate to={'/login'} replace />;
   }
 
-  if (roles && !roles.includes(token.role)) {
+  if (roles && (role || !role?.includes(role))) {
     return <Navigate to={'/unauthorized'} replace />;
   }
 
