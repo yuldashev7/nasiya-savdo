@@ -8,25 +8,23 @@ import React from 'react';
 import logo from '../../../assets/images/LOGO.png';
 import { toast } from 'react-toastify';
 import { request } from '../../../config/data/request';
-
-type FieldType = {
-  username?: string;
-  password?: string;
-};
+import type { FieldType } from '../../../types/types';
 
 const inputSchema = z.object({
-  username: z
-    .string()
-    .min(4, 'Login kamida 4 ta belgi bo‘lishi kerak')
-    .max(12, 'Login 12 ta belgidan oshmasligi kerak'),
+  username: z.string().min(4, 'Login kamida 4 ta belgi bo‘lishi kerak'),
+
   password: z
     .string()
     .min(6, 'Parol kamida 6 ta belgi bo‘lishi kerak')
-    .max(12, 'Parol 12 ta belgidan oshmasligi kerak'),
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=(?:.*\d){2,}).+$/,
+      'Parol kamida 1 katta harf va 2 raqamdan iborat bo‘lishi kerak'
+    ),
 });
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setloading] = React.useState(false);
   const [error, setError] = React.useState<{
     username?: string;
     password?: string;
@@ -44,33 +42,39 @@ const Login = () => {
       return;
     }
     setError({});
+    setloading(true);
 
     try {
       const res = await request.post('/admin/signin', {
         username: values.username,
         password: values.password,
       });
-      const token = res.data?.data?.token;
+      console.log('backend', res.data);
+
+      const token = res.data.data.token;
+
       if (!token) {
-        toast.error('Token Topilmadi', { autoClose: 1500 });
+        toast.error('Token Topilmadi');
         return;
       }
-      localStorage.setItem('token', token);
-      toast.success('Tizimga muvaffaqiyatli kirdingiz!', { autoClose: 1500 });
 
-      const role = res.data?.role;
+      localStorage.setItem('token', res.data.data.token);
+      localStorage.setItem('role', res.data.data.role);
 
-      if (role === 'admin') {
-        toast.success('Tizimga muvaffaqiyatli kirdingiz!', { autoClose: 1500 });
-        return navigate('/admin/dashboard', { replace: true });
-      } else if (role === 'seller') {
-        toast.success('Tizimga muvaffaqiyatli kirdingiz!', { autoClose: 1500 });
-        return navigate('/seller', { replace: true });
-      } else {
-        navigate('/', { replace: true });
+      const role = res.data.data.role;
+      console.log('roleee', role);
+
+      toast.success('Tizimga muvaffaqiyatli kirdingiz!');
+
+      if (role == 'SUPER ADMIN') {
+        return navigate('/super-admin', { replace: true });
+      } else if (role == 'ADMIN') {
+        return navigate('/admin');
       }
     } catch (err) {
       console.log('role error', err);
+    } finally {
+      setloading(false);
     }
   };
 
@@ -120,6 +124,7 @@ const Login = () => {
               htmlType="submit"
               className="w-full sm:w-[300px] md:w-[250px]"
               size="large"
+              loading={loading}
             >
               Submit
             </Button>
