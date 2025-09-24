@@ -6,7 +6,6 @@ import type { adminT } from '../../types/types';
 
 const SuperAdminDashboard = () => {
   const { data, isLoading } = useGetAdmin();
-  console.log('post data', data);
 
   const navigate = useNavigate();
 

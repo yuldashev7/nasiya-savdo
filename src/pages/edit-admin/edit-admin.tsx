@@ -55,7 +55,6 @@ const EditAdmin = () => {
         handleError(err.data?.errors || {});
         setLoading(false);
         toast.error('Adminni yangilashda xatolik');
-        console.log('edit error', err);
       },
     });
   };

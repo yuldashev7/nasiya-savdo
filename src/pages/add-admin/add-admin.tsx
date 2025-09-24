@@ -30,7 +30,6 @@ const AddAdmin = () => {
       role: values.role,
       isActive: true,
     };
-    console.log('payload', payload);
 
     mutate(payload, {
       onSuccess: () => {

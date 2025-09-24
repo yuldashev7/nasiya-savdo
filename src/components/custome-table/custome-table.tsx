@@ -79,6 +79,7 @@ const CustomeTable = ({ dataSource, loading }: tableT) => {
           pageSize,
           total: dataSource.length,
         }}
+        scroll={{ x: 'max-content' }}
       />
     </div>
   );
