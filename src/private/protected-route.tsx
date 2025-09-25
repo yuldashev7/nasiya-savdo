@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
     return <Navigate to={'/login'} replace />;
   }
 
-  if (roles && (role || !role?.includes(role))) {
+  if (roles && role && !roles.includes(role.toUpperCase())) {
     return <Navigate to={'/unauthorized'} replace />;
   }
 

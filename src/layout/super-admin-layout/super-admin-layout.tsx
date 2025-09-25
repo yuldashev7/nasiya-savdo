@@ -38,6 +38,7 @@ const SuperAdminLayout = () => {
   const navigate = useNavigate();
   const removeToken = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     navigate('/login');
     toast.success('Tizimdan muvaffaqiyatli chiqdingiz', { autoClose: 1500 });
   };

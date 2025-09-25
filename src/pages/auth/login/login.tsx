@@ -58,11 +58,11 @@ const Login = () => {
         return;
       }
 
-      localStorage.setItem('token', res.data.data.token);
-      localStorage.setItem('role', res.data.data.role);
-
-      const role = res.data.data.role;
+      const role = res.data.data.role?.toUpperCase();
       console.log('roleee', role);
+
+      localStorage.setItem('token', res.data.data.token);
+      localStorage.setItem('role', role);
 
       toast.success('Tizimga muvaffaqiyatli kirdingiz!');
 

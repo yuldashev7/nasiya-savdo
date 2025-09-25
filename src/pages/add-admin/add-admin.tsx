@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateAdmin } from '../../crud-admins/mutation/useCreateAdmin';
 import { toast } from 'react-toastify';
 import { useForm } from 'antd/es/form/Form';
-import type { inputErrT } from '../../types/types';
 import { useState } from 'react';
+import { AxiosError } from 'axios';
+import type { inputErrT } from '../../types/types';
 
 const AddAdmin = () => {
   const navigate = useNavigate();
@@ -38,11 +39,23 @@ const AddAdmin = () => {
         setLoading(false);
       },
       onError: (err: inputErrT) => {
-        handleError(err.data?.errors || {});
-        toast.error(
-          "Parolda kamida 1 ta katta harf 2 ta raqam va ' ! ' bo'lishi kerak"
-        );
-        console.error('admin', err);
+        if (err instanceof AxiosError) {
+          const status = err.response?.status;
+          const resData = err.response?.data;
+
+          if (status === 409) {
+            toast.error(
+              resData?.message || 'Bunday foydalanuvchi allaqachon mavjud!'
+            );
+          } else if (status === 422) {
+            toast.error("Ma'lumotlarni to‘g‘ri kiriting!");
+          }
+
+          if (resData?.data?.errors) {
+            handleError(resData.data.errors);
+          }
+        }
+
         setLoading(false);
       },
     });

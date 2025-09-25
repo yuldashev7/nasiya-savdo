@@ -24,8 +24,7 @@ function App() {
       <Route
         path="/super-admin"
         element={
-          <ProtectedRoute>
-            {/* roles={['admin']} */}
+          <ProtectedRoute roles={['SUPER ADMIN']}>
             <SuperAdminLayout />
           </ProtectedRoute>
         }
@@ -41,7 +40,7 @@ function App() {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute roles={['ADMIN']}>
             <AdminLayout />
           </ProtectedRoute>
         }
