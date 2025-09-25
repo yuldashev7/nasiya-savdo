@@ -44,9 +44,7 @@ const AddAdmin = () => {
           const resData = err.response?.data;
 
           if (status === 409) {
-            toast.error(
-              resData?.message || 'Bunday foydalanuvchi allaqachon mavjud!'
-            );
+            toast.error('Bunday foydalanuvchi allaqachon mavjud!');
           } else if (status === 422) {
             toast.error("Ma'lumotlarni to‘g‘ri kiriting!");
           }
@@ -67,7 +65,10 @@ const AddAdmin = () => {
         <Form.Item
           label="Username"
           name="username"
-          rules={[{ required: true, message: 'Username kiritilishi shart' }]}
+          rules={[
+            { required: true, message: 'Username kiritilishi shart' },
+            { min: 4, message: 'Login kamida 4 ta belgi bo‘lishi kerak' },
+          ]}
         >
           <Input placeholder="Username kiriting" />
         </Form.Item>
@@ -75,7 +76,13 @@ const AddAdmin = () => {
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: 'Parol kiritish shart' }]}
+          rules={[
+            { required: true, message: 'Parol kiritish shart' },
+            {
+              min: 6,
+              message: 'Parol kamida 6 ta belgi va " ! " bo‘lishi kerak',
+            },
+          ]}
         >
           <Input.Password placeholder="Parol kiriting" />
         </Form.Item>

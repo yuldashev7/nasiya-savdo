@@ -65,7 +65,10 @@ const EditAdmin = () => {
         <Form.Item
           label="User Name"
           name="username"
-          rules={[{ required: true, message: 'Username kiritilishi shart' }]}
+          rules={[
+            { required: true, message: 'Username kiritilishi shart' },
+            { min: 4, message: 'Login kamida 4 ta belgi bo‘lishi kerak' },
+          ]}
         >
           <Input placeholder="User Name kiriting" />
         </Form.Item>

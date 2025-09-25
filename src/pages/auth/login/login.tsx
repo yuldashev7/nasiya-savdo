@@ -3,45 +3,19 @@ import { Button, Form, Input } from 'antd';
 import LoginIcon from '../../../assets/icons/login-icon';
 import PasswordIcon from '../../../assets/icons/password-icon';
 import { useNavigate } from 'react-router-dom';
-import z from 'zod';
 import React from 'react';
 import logo from '../../../assets/images/LOGO.png';
 import { toast } from 'react-toastify';
 import { request } from '../../../config/data/request';
 import type { FieldType } from '../../../types/types';
-
-const inputSchema = z.object({
-  username: z.string().min(4, 'Login kamida 4 ta belgi bo‘lishi kerak'),
-
-  password: z
-    .string()
-    .min(6, 'Parol kamida 6 ta belgi bo‘lishi kerak')
-    .regex(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=(?:.*\d){2,}).+$/,
-      'Parol kamida 1 katta harf va 2 raqamdan iborat bo‘lishi kerak'
-    ),
-});
+import { useForm } from 'antd/es/form/Form';
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setloading] = React.useState(false);
-  const [error, setError] = React.useState<{
-    username?: string;
-    password?: string;
-  }>({});
+  const [form] = useForm();
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const result = inputSchema.safeParse(values);
-
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.issues.forEach((issue) => {
-        fieldErrors[issue.path[0] as string] = issue.message;
-      });
-      setError(fieldErrors);
-      return;
-    }
-    setError({});
     setloading(true);
 
     try {
@@ -71,8 +45,18 @@ const Login = () => {
       } else if (role == 'ADMIN') {
         return navigate('/admin');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log('role error', err);
+      form.setFields([
+        {
+          name: 'username',
+          errors: ['Login yoki parol noto‘g‘ri'],
+        },
+        {
+          name: 'password',
+          errors: [''],
+        },
+      ]);
     } finally {
       setloading(false);
     }
@@ -96,16 +80,20 @@ const Login = () => {
         >
           <Form.Item<FieldType>
             name="username"
-            validateStatus={error.username ? 'error' : ''}
-            help={error.username}
+            rules={[
+              { required: true, message: 'Loginni kiriting!' },
+              { min: 4, message: 'Login kamida 4 ta belgi bo‘lishi kerak' },
+            ]}
           >
             <Input prefix={<LoginIcon />} placeholder="Login" size="large" />
           </Form.Item>
 
           <Form.Item<FieldType>
             name="password"
-            validateStatus={error.password ? 'error' : ''}
-            help={error.password}
+            rules={[
+              { required: true, message: 'Parolni kiriting!' },
+              { min: 6, message: 'Parol kamida 6 ta belgi bo‘lishi kerak' },
+            ]}
           >
             <Input.Password
               prefix={<PasswordIcon />}
