@@ -9,13 +9,14 @@ const SuperAdminDashboard = () => {
 
   const navigate = useNavigate();
 
-  const mappedData: { username: string; email: string }[] = Array.isArray(data)
-    ? data.map((item: adminT) => ({
-        id: item.id,
-        username: item.username,
-        email: item.email,
-      }))
-    : [];
+  const mappedData: { id: string; username?: string; email: string }[] =
+    Array.isArray(data)
+      ? data.map((item: adminT) => ({
+          id: item.id,
+          username: item.username,
+          email: item.email,
+        }))
+      : [];
 
   return (
     <div>
@@ -23,6 +24,7 @@ const SuperAdminDashboard = () => {
         <Button
           onClick={() => navigate('/super-admin/add-admin')}
           type="primary"
+          className="mb-[20px] sm:w-[90px] sm:!text-[12px] !font-[500] sm:font-[600]"
         >
           Admin Qo'shish
         </Button>

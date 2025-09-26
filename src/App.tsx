@@ -14,6 +14,8 @@ import AdminDashboard from './pages/admin/admin-dashboard';
 import EditAdmin from './pages/edit-admin/edit-admin';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import EditStore from './pages/edit-store/edit-store';
+import AddStore from './pages/add-store/add-store';
 
 function App() {
   const [toastPosition, setToastPosition] = useState<
@@ -51,6 +53,9 @@ function App() {
           <Route path="add-admin" element={<AddAdmin />} />
           <Route path="admin/:id" element={<EditAdmin />} />
           <Route path="seller-dashboard" element={<SellerDashboard />} />
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="add-store" element={<AddStore />} />
+          <Route path="edit-store/:id" element={<EditStore />} />
         </Route>
 
         {/* admin */}
@@ -63,7 +68,9 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="add-store" element={<AddStore />} />
+          <Route path="edit-store/:id" element={<EditStore />} />
         </Route>
 
         {/* pages */}

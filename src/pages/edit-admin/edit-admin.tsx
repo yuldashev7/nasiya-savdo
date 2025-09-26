@@ -5,7 +5,7 @@ import type { inputErrT } from '../../types/types';
 import { Button, Form, Input, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import { useGetAdminById } from '../../crud-admins/query/UsegetAdminById';
+import { useGetAdminById } from '../../crud-admins/query/useGetAdminById';
 
 const EditAdmin = () => {
   const { id } = useParams<{ id: string }>();
@@ -47,20 +47,25 @@ const EditAdmin = () => {
 
     mutate(payload, {
       onSuccess: () => {
-        toast.success('Admin yangilandi');
+        toast.success('Admin Yangilandi');
         navigate('/super-admin');
         setLoading(false);
       },
       onError: (err: inputErrT) => {
         handleError(err.data?.errors || {});
         setLoading(false);
-        toast.error('Adminni yangilashda xatolik');
+        toast.error('Adminni Yangilashda Xatolik');
       },
     });
   };
 
   return (
     <div>
+      <div className="mt-[10px] mb-[20px]">
+        <Button className="w-[100px]" onClick={() => navigate('/super-admin')}>
+          Ortga qaytish
+        </Button>
+      </div>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="User Name"

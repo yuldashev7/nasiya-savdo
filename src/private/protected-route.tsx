@@ -1,10 +1,5 @@
-import type { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
-
-interface ProtectedRouteProps {
-  children: JSX.Element;
-  roles?: string[];
-}
+import type { ProtectedRouteProps } from '../types/types';
 
 const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
   const token = localStorage.getItem('token');

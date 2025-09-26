@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
-import type { inputErrT } from '../../types/types';
+import type { adminT, inputErrT } from '../../types/types';
 
 const AddAdmin = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const AddAdmin = () => {
     form.setFields(fields);
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: adminT) => {
     setLoading(true);
     const payload = {
       username: values.username,
@@ -34,11 +34,12 @@ const AddAdmin = () => {
 
     mutate(payload, {
       onSuccess: () => {
-        toast.success("Admin Qo'shildi");
+        toast.success("Admin qo'shildi");
         navigate('/super-admin');
         setLoading(false);
       },
       onError: (err: inputErrT) => {
+        toast.error("Admin qo'shishda xatolik");
         if (err instanceof AxiosError) {
           const status = err.response?.status;
           const resData = err.response?.data;
@@ -61,6 +62,11 @@ const AddAdmin = () => {
 
   return (
     <div>
+      <div className="mt-[10px] mb-[20px]">
+        <Button className="w-[100px]" onClick={() => navigate('/super-admin')}>
+          Ortga qaytish
+        </Button>
+      </div>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Username"
@@ -80,7 +86,8 @@ const AddAdmin = () => {
             { required: true, message: 'Parol kiritish shart' },
             {
               min: 6,
-              message: 'Parol kamida 6 ta belgi va " ! " bo‘lishi kerak',
+              message:
+                'Parol kamida 6 ta belgi 1 ta raqam va " ! " bo‘lishi kerak',
             },
           ]}
         >
@@ -97,6 +104,7 @@ const AddAdmin = () => {
         >
           <Input placeholder="Email kiriting" />
         </Form.Item>
+
         <Form.Item
           label="Role"
           name="role"

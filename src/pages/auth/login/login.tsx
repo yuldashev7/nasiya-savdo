@@ -64,7 +64,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen sm:py-[20px] md:py-[30px]">
+      <div className="container flex flex-col items-center justify-center min-h-screen sm:py-[20px] md:py-[30px]">
         <div className="flex flex-col items-center justify-center text-center">
           <img className="sm:mb-[20px]" src={logo} alt="img" />
           <h1 className="font-[700] text-[24px] text-#000">Dasturga kirish</h1>

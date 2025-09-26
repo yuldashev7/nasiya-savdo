@@ -1,7 +1,21 @@
+import type { JSX } from 'react';
+
 export interface dataT {
-  // id: string;
-  username: string;
-  email: string;
+  username?: string;
+  email?: string;
+  phoneNumber?: string;
+  role?: string;
+  wallet?: number | string;
+  id?: string;
+  password?: string;
+  fullName?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProtectedRouteProps {
+  children: JSX.Element;
+  roles?: string[];
 }
 
 export interface ModalT {
@@ -17,16 +31,31 @@ export type FieldType = {
 
 export interface adminT {
   id: string;
-  username: string;
+  fullName?: string;
+  username?: string;
   password?: string;
   email: string;
   role?: string;
   isActive?: boolean;
+  phoneNumber?: string;
+}
+
+export interface sellerT {
+  role: string;
+  phoneNumber: string;
+  isActive: boolean;
+  wallet: number;
+  id: string;
+  email: string;
+  fullName: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface columnsT {
-  title: string;
+  title?: string;
   dataIndex?: string;
+  id?: string;
   key?: string;
   width?: string;
   render?: (value: any, record: any, index: number) => React.ReactNode;

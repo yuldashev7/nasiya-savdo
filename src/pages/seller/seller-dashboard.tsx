@@ -1,5 +1,4 @@
 const SellerDashboard = () => {
-  return <div>SellerDashboard</div>;
+  return <>SellerDashboard</>;
 };
-
 export default SellerDashboard;

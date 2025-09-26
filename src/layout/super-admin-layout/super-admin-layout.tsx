@@ -2,7 +2,8 @@ import {
   CrownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined,
+  ShoppingOutlined,
+  // UserOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import React, { useState } from 'react';
@@ -17,14 +18,20 @@ const linkData = [
   {
     key: 'super-admin',
     path: '/super-admin',
-    title: 'admin',
+    title: 'Admin Yaratish',
     icon: CrownOutlined,
   },
+  // {
+  //   key: 'seller',
+  //   path: '/super-admin/seller-dashboard',
+  //   title: 'create-seller',
+  //   icon: UserOutlined,
+  // },
   {
-    key: 'seller',
-    path: '/super-admin/seller-dashboard',
-    title: 'seller',
-    icon: UserOutlined,
+    key: 'admin',
+    path: '/super-admin/admin',
+    title: 'Store Yaratish',
+    icon: ShoppingOutlined,
   },
 ];
 
@@ -40,7 +47,7 @@ const SuperAdminLayout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     navigate('/login');
-    toast.success('Tizimdan muvaffaqiyatli chiqdingiz', { autoClose: 1500 });
+    toast.success('Tizimdan muvaffaqiyatli chiqdingiz');
   };
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -90,11 +97,7 @@ const SuperAdminLayout = () => {
             <Button
               danger
               onClick={removeToken}
-              style={{
-                marginRight: '30px',
-                paddingTop: '18px',
-                paddingBottom: '18px',
-              }}
+              className="mr-7 sm:py-2 lg:p-4 flex items-center gap-2"
             >
               <LogOutIcon />
               LogOut

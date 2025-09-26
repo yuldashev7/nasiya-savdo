@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd';
+import { Button, Table, Tag } from 'antd';
 import type { adminT, columnsT, tableT } from '../../types/types';
 import { useDeleteAdmin } from '../../crud-admins/mutation/useDeleteAdmin';
 import { toast } from 'react-toastify';
@@ -66,6 +66,15 @@ const CustomeTable = ({ dataSource, loading }: tableT) => {
           </div>
         );
       },
+    },
+    {
+      title: 'Active',
+      dataIndex: 'isActive',
+      key: 'isActive',
+      width: '25%',
+      render: (isActive: boolean) => (
+        <Tag color={isActive ? 'green' : 'red'}>{isActive ? 'Ha' : 'Yo‘q'}</Tag>
+      ),
     },
   ];
   return (
