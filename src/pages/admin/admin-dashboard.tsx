@@ -35,9 +35,9 @@ const AdminDashboard = () => {
               : '/admin/add-store'
           )
         }
-        className="mb-[20px] sm:w-[90px] sm:!text-[13px] sm:!font-[500]"
+        className="mb-[20px] sm:w-[90px] sm:!text-[12px] sm:!font-[500]"
       >
-        Store yaratish
+        Do'kon Qo'shish
       </Button>
 
       <Storetable dataSource={mappedData} loading={isLoading} />

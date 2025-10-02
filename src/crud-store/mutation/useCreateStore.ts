@@ -3,12 +3,20 @@ import { request } from '../../config/data/request';
 // import type { adminT } from '../../types/types';
 
 export interface CreateStorePayload {
-  fullName?: string;
-  email: string;
-  phoneNumber?: string;
-  role: string;
-  password?: string;
-  wallet: number;
+  fullName: string;
+  address: string;
+  // product: string;
+  // date: string;
+  // period: number;
+  // sum: number;
+  description?: string;
+  // monthlySum: number;
+  // remnant?: number;
+  phoneNumber: string;
+  storeId?: string | null;
+  imageDebtor?: string;
+  role?: string;
+  wallet?: number;
 }
 
 export const useCreateStore = () => {

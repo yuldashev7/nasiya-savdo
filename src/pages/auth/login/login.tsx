@@ -3,40 +3,64 @@ import { Button, Form, Input } from 'antd';
 import LoginIcon from '../../../assets/icons/login-icon';
 import PasswordIcon from '../../../assets/icons/password-icon';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../../assets/images/LOGO.png';
 import { toast } from 'react-toastify';
 import { request } from '../../../config/data/request';
-import type { FieldType } from '../../../types/types';
 import { useForm } from 'antd/es/form/Form';
+import CustomeModal from '../../../components/custome-modal/custome-modal';
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setloading] = React.useState(false);
   const [form] = useForm();
+  const [open, setOpen] = useState<boolean>(false);
 
-  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+  type FieldType = {
+    username: string;
+    password: string;
+  };
+  const onFinish: FormProps<FieldType>['onFinish'] = async (
+    values: FieldType
+  ) => {
     setloading(true);
 
     try {
-      const res = await request.post('/admin/signin', {
-        username: values.username,
-        password: values.password,
-      });
-      console.log('backend', res.data);
+      let res;
+      let token;
+      let role;
+      let storeId;
 
-      const token = res.data.data.token;
+      if (values.username.includes('@')) {
+        res = await request.post('/store/signin', {
+          email: values.username,
+          password: values.password,
+        });
+        console.log(res);
+
+        token = res.data.data.accessToken;
+        storeId = res.data.data.id;
+        role = 'STORE';
+      } else {
+        res = await request.post('/admin/signin', {
+          username: values.username,
+          password: values.password,
+        });
+        token = res.data.data.token;
+        role = res.data.data.role?.toUpperCase();
+      }
 
       if (!token) {
         toast.error('Token Topilmadi');
         return;
       }
 
-      const role = res.data.data.role?.toUpperCase();
-      console.log('roleee', role);
-
-      localStorage.setItem('token', res.data.data.token);
+      localStorage.setItem('token', token);
       localStorage.setItem('role', role);
+      localStorage.setItem('storeId', storeId);
+
+      console.log('role', role);
+      console.log('storeId', storeId);
 
       toast.success('Tizimga muvaffaqiyatli kirdingiz!');
 
@@ -44,6 +68,10 @@ const Login = () => {
         return navigate('/super-admin', { replace: true });
       } else if (role == 'ADMIN') {
         return navigate('/admin');
+      } else if (role === 'STORE') {
+        return navigate('/store-dashboard');
+      } else {
+        toast.info('Admin paneliga URL orqali kiring!');
       }
     } catch (err: any) {
       console.log('role error', err);
@@ -73,6 +101,7 @@ const Login = () => {
           </p>
         </div>
         <Form
+          form={form}
           name="basic"
           onFinish={onFinish}
           autoComplete="off"
@@ -102,9 +131,7 @@ const Login = () => {
             />
           </Form.Item>
 
-          <p className="text-right underline mb-3 font-medium text-sm text-primary -mt-3 cursor-pointer">
-            Parolni unutdingizmi?
-          </p>
+          <CustomeModal />
 
           <Form.Item className="text-center">
             <Button

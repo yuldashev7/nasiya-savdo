@@ -16,10 +16,10 @@ const Storetable = ({ dataSource, loading }: tableT) => {
     deleteAdmin(id, {
       onSuccess: () => {
         setLoadingID(null);
-        toast.success("Store O'chirildi");
+        toast.success("Do'kon O'chirildi");
       },
       onError: () => {
-        toast.error("Store Qo'shishda Xatolik");
+        toast.error("Do'kon Qo'shishda Xatolik");
         setLoadingID(null);
       },
     });
@@ -31,85 +31,91 @@ const Storetable = ({ dataSource, loading }: tableT) => {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
+      width: '60px',
       render: (_: any, __: any, index: number) => <span>{index + 1}</span>,
     },
     {
       title: 'Name',
       dataIndex: 'fullName',
       key: 'name',
+      width: '180px',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-    },
-    {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
+      width: '220px',
     },
     {
       title: 'Wallet',
       dataIndex: 'wallet',
       key: 'wallet',
+      width: '150px',
+      render: (value: number) =>
+        value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' UZS',
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
+      width: '180px',
     },
     {
-      title: 'createdAt',
+      title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: '130px',
       render: (text: string | undefined) =>
         text ? new Date(text).toLocaleDateString() : '—',
     },
     {
-      title: 'updatedAt',
+      title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
+      width: '130px',
       render: (text: string) => new Date(text).toLocaleDateString(),
     },
     {
       title: 'Actions',
-      render: (_: any, record: adminT) => {
-        return (
-          <div className="flex items-center gap-[20px]">
-            <Button
-              className="w-[70px]"
-              danger
-              loading={loadingId == record.id}
-              onClick={() => handleDelete(record.id)}
-            >
-              Delete
-            </Button>
-            <Button
-              className="w-[70px]"
-              type="primary"
-              onClick={() =>
-                navigate(
-                  user?.role === 'SUPER ADMIN'
-                    ? `/super-admin/edit-store/${record.id}`
-                    : `/admin/edit-store/${record.id}`
-                )
-              }
-            >
-              Edit
-            </Button>
-          </div>
-        );
-      },
+      key: 'actions',
+      width: '160px',
+      render: (_: any, record: adminT) => (
+        <div className="flex items-center gap-[10px]">
+          <Button
+            className="w-[70px]"
+            danger
+            loading={loadingId == record.id}
+            onClick={() => handleDelete(record.id)}
+          >
+            Delete
+          </Button>
+          <Button
+            className="w-[70px]"
+            type="primary"
+            onClick={() =>
+              navigate(
+                user?.role === 'SUPER ADMIN'
+                  ? `/super-admin/edit-store/${record.id}`
+                  : `/admin/edit-store/${record.id}`
+              )
+            }
+          >
+            Edit
+          </Button>
+        </div>
+      ),
     },
     {
       title: 'Active',
       dataIndex: 'isActive',
       key: 'isActive',
+      width: '100px',
       render: (isActive: boolean | undefined) => (
         <Tag color={isActive ? 'green' : 'red'}>{isActive ? 'Ha' : 'Yo‘q'}</Tag>
       ),
     },
   ];
+
   return (
     <div>
       <Table
@@ -121,7 +127,7 @@ const Storetable = ({ dataSource, loading }: tableT) => {
           pageSize,
           total: dataSource.length,
         }}
-        scroll={{ x: 'full-content' }}
+        scroll={{ x: '1200px' }}
       />
     </div>
   );

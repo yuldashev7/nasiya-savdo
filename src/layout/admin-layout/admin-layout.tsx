@@ -1,7 +1,9 @@
 import {
+  AccountBookOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   ShoppingOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import React, { useState } from 'react';
@@ -14,10 +16,22 @@ const { Header, Sider, Content } = Layout;
 
 const linkData = [
   {
+    title: "Do'kon Qo'shish",
     key: 'admin',
     path: '/admin',
-    title: 'Store-yaratish',
     icon: ShoppingOutlined,
+  },
+  {
+    title: "Qarzdor Qo'shish",
+    key: 'store-dashboard',
+    path: 'store-dashboard',
+    icon: AccountBookOutlined,
+  },
+  {
+    title: 'Profil',
+    key: 'admin-profile',
+    path: 'admin-profile',
+    icon: UserOutlined,
   },
 ];
 

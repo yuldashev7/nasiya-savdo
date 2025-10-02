@@ -14,7 +14,7 @@ const SuperAdminDashboard = () => {
       ? data.map((item: adminT) => ({
           id: item.id,
           username: item.username,
-          email: item.email,
+          email: item.email || '',
         }))
       : [];
 

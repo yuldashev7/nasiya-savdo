@@ -1,4 +1,5 @@
 import {
+  AccountBookOutlined,
   CrownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -18,20 +19,20 @@ const linkData = [
   {
     key: 'super-admin',
     path: '/super-admin',
-    title: 'Admin Yaratish',
+    title: "Admin Qo'shish",
     icon: CrownOutlined,
   },
-  // {
-  //   key: 'seller',
-  //   path: '/super-admin/seller-dashboard',
-  //   title: 'create-seller',
-  //   icon: UserOutlined,
-  // },
   {
     key: 'admin',
     path: '/super-admin/admin',
-    title: 'Store Yaratish',
+    title: "Do'kon Qo'shish",
     icon: ShoppingOutlined,
+  },
+  {
+    key: 'store-dashboard',
+    path: '/super-admin/store-dashboard',
+    title: "Qarzdor Qo'shish",
+    icon: AccountBookOutlined,
   },
 ];
 

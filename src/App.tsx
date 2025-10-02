@@ -8,33 +8,21 @@ import NotFound from './pages/not-found/not-found';
 import SuperAdminLayout from './layout/super-admin-layout/super-admin-layout';
 import SuperAdminDashboard from './pages/super-admin/super-admin-dashboard';
 import SellerDashboard from './pages/seller/seller-dashboard';
-import AddAdmin from './pages/add-admin/add-admin';
+import AddAdmin from './pages/crud-pages/add-admin/add-admin';
 import AdminLayout from './layout/admin-layout/admin-layout';
 import AdminDashboard from './pages/admin/admin-dashboard';
-import EditAdmin from './pages/edit-admin/edit-admin';
-import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import EditStore from './pages/edit-store/edit-store';
-import AddStore from './pages/add-store/add-store';
+import EditAdmin from './pages/crud-pages/edit-admin/edit-admin';
+import EditStore from './pages/crud-pages/edit-store/edit-store';
+import AddStore from './pages/crud-pages/add-store/add-store';
+import StoreDashboard from './pages/store-dashboard/store-dashboard';
+import AddDebtor from './pages/crud-pages/add-debtor/add-debtor';
+import StoreLayout from './layout/store-layout/store-layout';
+import AdminProfile from './pages/admin-profile/admin-profile';
+import EditDebtor from './pages/crud-pages/edit-debtor/edit-debtor';
 
 function App() {
-  const [toastPosition, setToastPosition] = useState<
-    'bottom-center' | 'top-right'
-  >(window.innerWidth <= 375 ? 'bottom-center' : 'top-right');
-
-  useEffect(() => {
-    const handleResize = () => {
-      setToastPosition(
-        window.innerWidth <= 375 ? 'bottom-center' : 'top-right'
-      );
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   return (
     <>
-      <ToastContainer position={toastPosition} theme="light" />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
@@ -56,6 +44,8 @@ function App() {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="add-store" element={<AddStore />} />
           <Route path="edit-store/:id" element={<EditStore />} />
+          <Route path="store-dashboard" element={<StoreDashboard />} />
+          <Route path="add-debtor" element={<AddDebtor />} />
         </Route>
 
         {/* admin */}
@@ -71,6 +61,24 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="add-store" element={<AddStore />} />
           <Route path="edit-store/:id" element={<EditStore />} />
+          <Route path="store-dashboard" element={<StoreDashboard />} />
+          <Route path="add-debtor" element={<AddDebtor />} />
+          <Route path="admin-profile" element={<AdminProfile />} />
+        </Route>
+
+        {/* store pages */}
+
+        <Route
+          path="/store-dashboard"
+          element={
+            <ProtectedRoute roles={['STORE']}>
+              <StoreLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<StoreDashboard />} />
+          <Route path="add-debtor" element={<AddDebtor />} />
+          <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
         {/* pages */}

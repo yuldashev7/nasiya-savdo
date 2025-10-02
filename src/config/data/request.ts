@@ -32,8 +32,8 @@ request.interceptors.response.use(
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      localStorage.removeItem('token');
-      window.location.href = '/';
+      // localStorage.removeItem('token');
+      // window.location.href = '/';
     }
     return Promise.reject(error);
   }

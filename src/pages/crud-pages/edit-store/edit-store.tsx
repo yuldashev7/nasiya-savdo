@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEditStore } from '../../crud-store/mutation/useEditStore';
-import { useGetStoreById } from '../../crud-store/query/useGetStoreById';
+import { useEditStore } from '../../../crud-store/mutation/useEditStore';
+import { useGetStoreById } from '../../../crud-store/query/useGetStoreById';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-import type { adminT, inputErrT } from '../../types/types';
+import type { adminT, inputErrT } from '../../../types/types';
 import { toast } from 'react-toastify';
-import { Button, Form, Input } from 'antd';
-import { useAuth } from '../../hooks/useAuth/useAuth';
+import { Button, Form, Input, InputNumber } from 'antd';
+import { useAuth } from '../../../hooks/useAuth/useAuth';
 
 const EditStore = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +23,7 @@ const EditStore = () => {
         fullName: store.fullName,
         email: store.email,
         phoneNumber: store.phoneNumber,
+        wallet: store.wallet,
       });
     }
   }, [store, form]);
@@ -42,6 +43,7 @@ const EditStore = () => {
       fullName: values.fullName,
       email: values.email,
       phoneNumber: values.phoneNumber,
+      wallet: Number(values.wallet),
     };
     mutate(payload, {
       onSuccess: () => {
@@ -54,7 +56,6 @@ const EditStore = () => {
       onError: (err: inputErrT) => {
         handleError(err.data?.errors || {});
         setLoading(false);
-        // toast.error('Store Yangilashda Xatolik');
       },
     });
   };
@@ -98,18 +99,50 @@ const EditStore = () => {
         </Form.Item>
 
         <Form.Item
-          label="telefon Raqam"
+          label="Balans"
+          name="wallet"
+          rules={[{ required: true, message: 'wallet' }]}
+        >
+          <InputNumber
+            placeholder="Balans (UZS)"
+            addonAfter="UZS"
+            min={0}
+            formatter={(value) =>
+              value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''
+            }
+            parser={(value: any) =>
+              value?.replace(/\s?UZS/g, '').replace(/\s/g, '') || ''
+            }
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Telefon Raqam"
           name="phoneNumber"
           rules={[
             { required: true, message: 'Telefon raqam kiritilishi shart' },
             {
-              pattern:
-                /^(?:\+998\s?\d{2}\s?\d{3}\s?\d{2}\s?\d{2}|\d{2}\s?\d{3}\s?\d{2}\s?\d{2})$/,
-              message: 'Telefon raqam noto‘g‘ri formatda.',
+              pattern: /^\d{2}-\d{3}-\d{2}-\d{2}$/,
+              message: 'Telefon raqam noto‘g‘ri formatda',
             },
           ]}
         >
-          <Input placeholder="Telefon Raqam Kiriting" />
+          <Input
+            maxLength={12}
+            addonBefore="+998"
+            placeholder="90-123-45-67"
+            onChange={(e) => {
+              let value = e.target.value.replace(/\D/g, '');
+              let formatted = '';
+
+              if (value.length > 0) formatted += value.slice(0, 2);
+              if (value.length >= 3) formatted += '-' + value.slice(2, 5);
+              if (value.length >= 6) formatted += '-' + value.slice(5, 7);
+              if (value.length >= 8) formatted += '-' + value.slice(7, 9);
+
+              form.setFieldsValue({ phoneNumber: formatted });
+            }}
+          />
         </Form.Item>
 
         <Form.Item>
