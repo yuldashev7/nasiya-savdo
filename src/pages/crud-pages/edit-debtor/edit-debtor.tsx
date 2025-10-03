@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDebtorById } from '../../../crud-debtor/query/useGetDebtorById';
-import { useEditDebtor } from '../../../crud-debtor/mutation/useEditDebtor';
+import { useGetDebtorById } from '../../../crud-debtor/query/use-get-debtor-by-id';
+import { useEditDebtor } from '../../../crud-debtor/mutation/use-edit-debtor';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-import { useAuth } from '../../../hooks/useAuth/useAuth';
+import { useAuth } from '../../../hooks/use-auth/use-auth';
 import type { debtorT, inputErrT } from '../../../types/types';
 import { toast } from 'react-toastify';
 import { Button, Form, Input } from 'antd';

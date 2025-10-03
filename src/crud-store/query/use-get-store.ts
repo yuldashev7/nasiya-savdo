@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { request } from '../../config/data/request';
 import type { adminT, dataT } from '../../types/types';
-import { useAuth } from '../../hooks/useAuth/useAuth';
+import { useAuth } from '../../hooks/use-auth/use-auth';
 
 export const useGetStore = () => {
   const { user } = useAuth();

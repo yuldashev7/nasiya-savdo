@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify';
 import CustomeForm from '../../../components/form/form';
-import { useCreateDebtor } from '../../../crud-debtor/mutation/useCreateDebtor';
+import { useCreateDebtor } from '../../../crud-debtor/mutation/use-create-debtor';
 import { Button, Form, Input, Select, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import type { debtorT, storeT } from '../../../types/types';
-import { useAuth } from '../../../hooks/useAuth/useAuth';
-import { useGetDebtorPagination } from '../../../crud-debtor/query/useGetDebtorePagination';
+import { useAuth } from '../../../hooks/use-auth/use-auth';
+import { useGetDebtorPagination } from '../../../crud-debtor/query/use-get-debtore-pagination';
 
 const AddDebtor = () => {
   const navigate = useNavigate();

@@ -32,7 +32,7 @@ const CustomeModal = () => {
                 Admin
               </Button>
               <Button className="w-[100px]" onClick={() => setType('STORE')}>
-                Store
+                Do'kon
               </Button>
             </div>
           </>

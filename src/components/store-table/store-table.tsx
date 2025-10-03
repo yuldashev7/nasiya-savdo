@@ -2,9 +2,9 @@ import { Button, Table, Tag } from 'antd';
 import type { adminT, columnsT, tableT } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import UseDeleteStore from '../../crud-store/mutation/useDeleteStore';
+import UseDeleteStore from '../../crud-store/mutation/use-delete-store';
 import { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth/useAuth';
+import { useAuth } from '../../hooks/use-auth/use-auth';
 
 const Storetable = ({ dataSource, loading }: tableT) => {
   const navigate = useNavigate();

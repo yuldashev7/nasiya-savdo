@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import {
   useCreateStore,
   type CreateStorePayload,
-} from '../../../crud-store/mutation/useCreateStore';
+} from '../../../crud-store/mutation/use-create-store';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
-import { useAuth } from '../../../hooks/useAuth/useAuth';
+import { useAuth } from '../../../hooks/use-auth/use-auth';
 import type { inputErrT } from '../../../types/types';
 import CustomeForm from '../../../components/form/form';
 import { Button } from 'antd';

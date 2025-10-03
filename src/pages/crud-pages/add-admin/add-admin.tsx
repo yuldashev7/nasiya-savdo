@@ -1,6 +1,6 @@
 import { Button, Input, Form, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useCreateAdmin } from '../../../crud-admins/mutation/useCreateAdmin';
+import { useCreateAdmin } from '../../../crud-admins/mutation/use-create-admin';
 import { toast } from 'react-toastify';
 import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';

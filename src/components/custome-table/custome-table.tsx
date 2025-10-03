@@ -1,6 +1,6 @@
 import { Button, Table, Tag } from 'antd';
 import type { adminT, columnsT, tableT } from '../../types/types';
-import { useDeleteAdmin } from '../../crud-admins/mutation/useDeleteAdmin';
+import { useDeleteAdmin } from '../../crud-admins/mutation/use-delete-admin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

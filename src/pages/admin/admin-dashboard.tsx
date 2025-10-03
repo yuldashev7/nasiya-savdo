@@ -1,9 +1,9 @@
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { dataT } from '../../types/types';
-import { useGetStore } from '../../crud-store/query/useStore';
+import { useGetStore } from '../../crud-store/query/use-get-store';
 import Storetable from '../../components/store-table/store-table';
-import { useAuth } from '../../hooks/useAuth/useAuth';
+import { useAuth } from '../../hooks/use-auth/use-auth';
 
 const AdminDashboard = () => {
   const { data, isLoading } = useGetStore();

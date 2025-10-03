@@ -1,9 +1,9 @@
 import { Button, Table } from 'antd';
 import type { debtorT } from '../../types/types';
-import { useGetDebtor } from '../../crud-debtor/query/useGetDebtor';
+import { useGetDebtor } from '../../crud-debtor/query/use-get-debtor';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth/useAuth';
-import { useDeleteDebtor } from '../../crud-debtor/mutation/useDeleteDebtor';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import { useDeleteDebtor } from '../../crud-debtor/mutation/use-delete-debtor';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 // import { useGetStore } from '../../crud-store/query/useStore';
