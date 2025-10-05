@@ -22,7 +22,7 @@ const EditDebtor = () => {
   useEffect(() => {
     if (debtor) {
       form.setFieldsValue({
-        imageDebtor: debtor.imageDebtor,
+        imagesDebtor: debtor.imagesDebtor,
         fullName: debtor.fullName,
         address: debtor.address,
         description: debtor.description,
@@ -75,26 +75,6 @@ const EditDebtor = () => {
       </div>
 
       <Form form={form} onFinish={onFinish} layout="vertical">
-        {/* <Form.Item
-          label="Rasim"
-          name="imageDebtor"
-          rules={[{ required: true, message: 'Rasim Tanlang' }]}
-          valuePropName="fileList"
-          getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-        >
-          <Upload
-            listType="picture-card"
-            maxCount={1}
-            accept="image/*"
-            beforeUpload={() => false}
-          >
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Rasm yuklash</div>
-            </div>
-          </Upload>
-        </Form.Item> */}
-
         <Form.Item
           label="Ism"
           name="fullName"
@@ -146,7 +126,7 @@ const EditDebtor = () => {
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
-            Qo'shish
+            Yangilash
           </Button>
         </Form.Item>
       </Form>

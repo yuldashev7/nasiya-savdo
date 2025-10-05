@@ -1,4 +1,4 @@
-import { Button, Input, Form, Select } from 'antd';
+import { Button, Input, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useCreateAdmin } from '../../../crud-admins/mutation/use-create-admin';
 import { toast } from 'react-toastify';
@@ -10,7 +10,6 @@ import type { adminT, inputErrT } from '../../../types/types';
 const AddAdmin = () => {
   const navigate = useNavigate();
   const { mutate } = useCreateAdmin();
-  const { Option } = Select;
   const [form] = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -28,7 +27,7 @@ const AddAdmin = () => {
       username: values.username,
       password: values.password,
       email: values.email,
-      role: values.role,
+      role: 'ADMIN',
       isActive: true,
     };
 
@@ -105,15 +104,18 @@ const AddAdmin = () => {
           <Input placeholder="Email kiriting" />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="Role"
           name="role"
           rules={[{ required: true, message: 'Role tanlanishi shart' }]}
         >
           <Select placeholder="Role tanlang">
             <Option value="ADMIN">ADMIN</Option>
-            <Option value="SELLER">SELLER</Option>
           </Select>
+        </Form.Item> */}
+
+        <Form.Item name="role" hidden>
+          <Input />
         </Form.Item>
 
         <Form.Item>

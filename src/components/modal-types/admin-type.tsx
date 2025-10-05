@@ -3,20 +3,26 @@ import { usePostPassword } from './mutation/admin/use-post-password-admin';
 import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useVerifyOtpAdmin } from './mutation/admin/use-verify-otp-admin';
+import { useResetPasswordAdmin } from './mutation/admin/use-reset-password-admin';
 
 const AdminType = ({ onClose }: { onClose: () => void }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [step, setStep] = useState<'EMAIL' | 'OTP'>('EMAIL');
-  const [transactionId, setTransactionId] = useState<string | null>(null);
+  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
+  const [savedEmail, setSavedEmail] = useState<string | null>(null);
   const { mutate: sendEmail } = usePostPassword();
   const { mutate: verifyOtp } = useVerifyOtpAdmin();
+  const { mutate: resetPassword } = useResetPasswordAdmin();
 
   const handleEmail = (values: { email: string }) => {
+    console.log('valuesss', values);
+
     setLoading(true);
     sendEmail(values, {
       onSuccess: (data: any) => {
-        toast.success('Emailingizga kod yuborildi!');
-        setTransactionId(data.transactionId);
+        if (data?.otp) {
+          alert(`Emailga kelgan kod: ${data?.otp}`);
+        }
+        setSavedEmail(values.email);
         setStep('OTP');
         setLoading(false);
       },
@@ -28,14 +34,13 @@ const AdminType = ({ onClose }: { onClose: () => void }) => {
   };
 
   const handleVerifyOtp = (values: { otp: string }) => {
-    if (!transactionId) return;
+    if (!savedEmail) return;
     setLoading(true);
     verifyOtp(
-      { otp: values.otp, transactionId },
+      { email: savedEmail, otp: values.otp },
       {
         onSuccess: () => {
-          toast.success('Parol tiklandi');
-          onClose();
+          setStep('RESET');
           setLoading(false);
         },
         onError: () => {
@@ -46,6 +51,24 @@ const AdminType = ({ onClose }: { onClose: () => void }) => {
     );
   };
 
+  const handleResetPassword = (values: { newPassword: string }) => {
+    if (!savedEmail) return;
+    const payload = { email: savedEmail, newPassword: values.newPassword };
+
+    setLoading(true);
+    resetPassword(payload, {
+      onSuccess: () => {
+        toast.success('Parol yangilandi');
+        onClose();
+        setLoading(false);
+      },
+      onError: () => {
+        toast.error('xatolik yuz berdi');
+        setLoading(false);
+      },
+    });
+  };
+
   return (
     <div>
       {step === 'EMAIL' && (
@@ -53,7 +76,10 @@ const AdminType = ({ onClose }: { onClose: () => void }) => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: 'Email kiriting!' }]}
+            rules={[
+              { required: true, message: 'Email kiriting!' },
+              { type: 'email', message: 'Email noto‘g‘ri formatda!' },
+            ]}
           >
             <Input placeholder="Email kiriting" />
           </Form.Item>
@@ -81,6 +107,27 @@ const AdminType = ({ onClose }: { onClose: () => void }) => {
               Yuborish
             </Button>
           </div>
+        </Form>
+      )}
+
+      {step === 'RESET' && (
+        <Form layout="vertical" onFinish={handleResetPassword}>
+          <Form.Item
+            label="Yangi parol"
+            name="newPassword"
+            rules={[
+              { required: true, message: "Parol qo'yish shart" },
+              {
+                min: 4,
+                message: 'Parol kamida 4 ta belgidan iborat bolishi kerak',
+              },
+            ]}
+          >
+            <Input.Password placeholder="Yangi parol kiriting" />
+          </Form.Item>
+          <Button htmlType="submit" loading={loading} type="primary">
+            Yangilash
+          </Button>
         </Form>
       )}
     </div>

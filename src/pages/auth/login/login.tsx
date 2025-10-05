@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd';
 import LoginIcon from '../../../assets/icons/login-icon';
 import PasswordIcon from '../../../assets/icons/password-icon';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import logo from '../../../assets/images/LOGO.png';
 import { toast } from 'react-toastify';
 import { request } from '../../../config/data/request';
@@ -14,7 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [loading, setloading] = React.useState(false);
   const [form] = useForm();
-  const [open, setOpen] = useState<boolean>(false);
 
   type FieldType = {
     username: string;

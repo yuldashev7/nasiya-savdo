@@ -101,7 +101,8 @@ export interface debtorT {
   description?: string;
   phoneNumber: string;
   storeId?: string | null;
-  imageDebtor: string;
+  imageDebtor?: { imageUrl: string }[];
+  imagesDebtor?: { imageUrl: string }[];
   createdAt: string;
   // imageDebt: string;
   // monthlySum?: number;
@@ -121,7 +122,13 @@ export type customeFormT = {
 
 export type storeT = {
   id: string;
-  name: string;
+  fullName: string;
+  phoneNumber?: string;
+  email?: string;
+  role?: string;
+  wallet?: number;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export interface PasswordT {

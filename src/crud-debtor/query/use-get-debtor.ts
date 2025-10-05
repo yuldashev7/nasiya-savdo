@@ -7,23 +7,18 @@ export const useGetDebtor = () => {
     queryKey: ['debtor'],
     queryFn: () =>
       request.get('/debtor').then((res) =>
-        res.data.data.map((item: debtorT) => ({
-          id: item.id,
-          fullName: item.fullName,
-          address: item.address,
-          description: item.description,
-          phoneNumber: item.phoneNumber,
-          storeId: item.storeId,
-          imageDebtor: item.imageDebtor,
-          createdAt: item.createdAt,
-          // product: item.product,
-          // date: item.date,
-          // period: item.period,
-          // sum: item.sum,
-          // monthlySum: item.monthlySum,
-          // remnant: item.remnant,
-          //   imageDebt: item.imageDebt,
-        }))
+        res.data.data.map(
+          (item: any): debtorT => ({
+            id: item.id,
+            fullName: item.fullName,
+            address: item.address,
+            description: item.description,
+            phoneNumber: item.phone,
+            storeId: item.storeId,
+            imagesDebtor: item.imagesDebtor,
+            createdAt: item.createdAt,
+          })
+        )
       ),
   });
 };

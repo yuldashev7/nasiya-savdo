@@ -6,14 +6,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import type { debtorT, storeT } from '../../../types/types';
 import { useAuth } from '../../../hooks/use-auth/use-auth';
-import { useGetDebtorPagination } from '../../../crud-debtor/query/use-get-debtore-pagination';
+import { useGetStore } from '../../../crud-store/query/use-get-store';
 
 const AddDebtor = () => {
   const navigate = useNavigate();
   const { mutate } = useCreateDebtor();
   const { Option } = Select;
   const { user } = useAuth();
-  const { data } = useGetDebtorPagination();
+  const { data } = useGetStore();
 
   const handleNavigate = () => {
     if (user?.role === 'STORE') {
@@ -26,19 +26,29 @@ const AddDebtor = () => {
   };
 
   const onSubmit = (values: Omit<debtorT, 'id'>) => {
+    console.log(values.storeId);
+
     const formData = new FormData();
-    const storeID: any = localStorage.getItem('storeId');
+
+    let storeId: any;
+
+    if (user?.role === 'STORE') {
+      storeId = localStorage.getItem('storeId');
+    } else if (user?.role === 'ADMIN' || user?.role === 'SUPER ADMIN') {
+      storeId = values.storeId as string;
+
+      if (!storeId) {
+        toast.error('Store tanlanmagan');
+        return;
+      }
+    }
+
     formData.append('fullName', values.fullName || '');
     formData.append('address', values.address || '');
     formData.append('description', values.description || '');
     formData.append('phoneNumber', values.phoneNumber || '');
-    formData.append('storeId', storeID);
-
-    let storeId: string | null;
-
-    if (user?.role === 'STORE') {
-      storeId = localStorage.getItem('storeId');
-    }
+    formData.append('storeId', storeId);
+    console.log(values);
 
     if ((values.imageDebtor as any)?.[0]?.originFileObj) {
       formData.append(
@@ -49,6 +59,7 @@ const AddDebtor = () => {
     mutate(formData, {
       onSuccess: () => {
         navigate('/store-dashboard');
+        handleNavigate();
         toast.success('Yangi qarzdor qo‘shildi');
       },
       onError: () => toast.error('Xatolik yuz berdi'),
@@ -66,15 +77,11 @@ const AddDebtor = () => {
         extraFields={
           <>
             {(user?.role === 'ADMIN' || user?.role === 'SUPER ADMIN') && (
-              <Form.Item
-                label="Store"
-                name="storeId"
-                rules={[{ required: true, message: 'Store tanlash shart' }]}
-              >
+              <Form.Item label="Store" name="storeId">
                 <Select placeholder="Store tanlang">
-                  {data?.map((store: storeT) => (
+                  {(data as storeT[])?.map((store) => (
                     <Option key={store.id} value={store.id}>
-                      {store.name}
+                      {store.fullName}
                     </Option>
                   ))}
                 </Select>

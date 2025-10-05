@@ -3,20 +3,24 @@ import { usePostPasswordStore } from './mutation/store/use-post-password-store';
 import { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useVerifyOtpStore } from './mutation/store/use-verify-otp-store';
+import { useResetPasswordStore } from './mutation/store/use-reset-password-store';
 
 const StoreType = ({ onClose }: { onClose: () => void }) => {
-  const [step, setStep] = useState<'EMAIL' | 'OTP'>('EMAIL');
-  const [transactionId, setTransactionId] = useState<string | null>(null);
+  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
+  const [savedEmail, setSavedEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { mutate: sendEmail } = usePostPasswordStore();
   const { mutate: verifyOtp } = useVerifyOtpStore();
+  const { mutate: resetPassword } = useResetPasswordStore();
 
   const handleEmail = (values: { email: string }) => {
     setLoading(true);
     sendEmail(values, {
       onSuccess: (data: any) => {
-        toast.success('Emailingizga kod yuborildi!');
-        setTransactionId(data.transactionId);
+        if (data?.otp) {
+          alert(`Emailga kelgan kod ${data?.otp}`);
+        }
+        setSavedEmail(values.email);
         setStep('OTP');
         setLoading(false);
       },
@@ -28,14 +32,13 @@ const StoreType = ({ onClose }: { onClose: () => void }) => {
   };
 
   const handleVerifyOtp = (values: { otp: string }) => {
-    if (!transactionId) return;
+    if (!savedEmail) return;
     setLoading(true);
     verifyOtp(
-      { otp: values.otp, transactionId },
+      { email: savedEmail, otp: values.otp },
       {
         onSuccess: () => {
-          toast.success('Kod yuborildi');
-          onClose();
+          setStep('RESET');
           setLoading(false);
         },
         onError: () => {
@@ -44,6 +47,24 @@ const StoreType = ({ onClose }: { onClose: () => void }) => {
         },
       }
     );
+  };
+
+  const handleResetPassword = (values: { newPassword: string }) => {
+    if (!savedEmail) return;
+
+    const payload = { email: savedEmail, newPassword: values.newPassword };
+    setLoading(true);
+    resetPassword(payload, {
+      onSuccess: () => {
+        toast.success('Parol yangilandi');
+        onClose();
+        setLoading(false);
+      },
+      onError: () => {
+        toast.error('Xatolik yuz berdi');
+        setLoading(false);
+      },
+    });
   };
 
   return (
@@ -81,6 +102,28 @@ const StoreType = ({ onClose }: { onClose: () => void }) => {
               Yuborish
             </Button>
           </div>
+        </Form>
+      )}
+
+      {step === 'RESET' && (
+        <Form layout="vertical" onFinish={handleResetPassword}>
+          <Form.Item
+            label="Parol"
+            name="newPassword"
+            rules={[
+              { required: true, message: "Parol qo'yish shart" },
+              {
+                min: 4,
+                message: 'Parol kamida 4 ta belgidan iborat bolishi kerak',
+              },
+            ]}
+          >
+            <Input.Password placeholder="Yangi parol kiriting" />
+          </Form.Item>
+
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Yangilash
+          </Button>
         </Form>
       )}
     </div>

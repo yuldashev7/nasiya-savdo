@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd';
+import { Button, Table, Image } from 'antd';
 import type { debtorT } from '../../types/types';
 import { useGetDebtor } from '../../crud-debtor/query/use-get-debtor';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,9 @@ import { useAuth } from '../../hooks/use-auth/use-auth';
 import { useDeleteDebtor } from '../../crud-debtor/mutation/use-delete-debtor';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-// import { useGetStore } from '../../crud-store/query/useStore';
-// import { useGetDebtorPagination } from '../../crud-debtor/query/useGetDebtorePagination';
 
 const StoreDashboard = () => {
   const { data, isLoading } = useGetDebtor();
-  // const { data: stores } = useGetDebtorPagination();
   const [loadingId, setLoadingID] = useState<string | null>(null);
 
   const { mutate: deleteDebtor } = useDeleteDebtor();
@@ -48,21 +45,15 @@ const StoreDashboard = () => {
   const handleEditNavigate = (id: string) => {
     if (user?.role === 'STORE') {
       return navigate(`/store-dashboard/edit-debtor/${id}`);
+    } else if (user?.role === 'ADMIN') {
+      navigate(`/admin/edit-debtor/${id}`);
+    } else if (user?.role === 'SUPER ADMIN') {
+      navigate(`/super-admin/edit-debtor/${id}`);
     }
   };
+  console.log(data);
 
-  const mappedData: debtorT[] = Array.isArray(data)
-    ? data.map((item: debtorT) => ({
-        id: item.id,
-        fullName: item.fullName,
-        address: item.address,
-        description: item.description,
-        phoneNumber: item.phoneNumber,
-        storeId: item.storeId,
-        imageDebtor: item.imageDebtor,
-        createdAt: item.createdAt,
-      }))
-    : [];
+  const mappedData: debtorT[] = data ?? [];
 
   const columns = [
     {
@@ -72,9 +63,24 @@ const StoreDashboard = () => {
       render: (_: any, __: any, index: any) => index + 1,
     },
     {
-      title: 'imageDebtor',
-      dataIndex: 'imageDebtor',
-      key: 'imageDebtor',
+      title: 'Image',
+      dataIndex: 'imagesDebtor',
+      key: 'imagesDebtor',
+      render: (imageDebtor: { imageUrl: string }[]) =>
+        imageDebtor && imageDebtor.length > 0 ? (
+          <Image
+            style={{
+              width: '50px',
+              height: '50px',
+              objectFit: 'cover',
+              borderRadius: '50%',
+            }}
+            src={encodeURI(imageDebtor[0].imageUrl)}
+            preview={false}
+          />
+        ) : (
+          <span>No Image</span>
+        ),
     },
     {
       title: 'Ism',
@@ -104,20 +110,13 @@ const StoreDashboard = () => {
         text ? new Date(text).toLocaleDateString() : '—',
     },
 
-    // {
-    //   title: 'Store',
-    //   key: 'store',
-    //   render: (_text: string, record: debtorT) => {
-    //     const store = stores?.find((s: any) => s.id === record.storeId);
-    //     return store?.name || record.storeId;
-    //   },
-    // },
     {
       title: 'Action',
       render: (_: any, record: debtorT) => {
         return (
           <div className="flex items-center gap-[10px]">
             <Button
+              className="w-[80px]"
               onClick={() => handleEditNavigate(record.id)}
               type="primary"
             >
@@ -127,7 +126,7 @@ const StoreDashboard = () => {
               loading={loadingId === record.id}
               onClick={() => handleDelete(record.id)}
               danger
-              className="w-[60px]"
+              className="w-[80px]"
             >
               Delete
             </Button>
