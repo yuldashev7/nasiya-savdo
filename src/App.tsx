@@ -1,23 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 import Unauthorized from './pages/unauth/unauthorized';
 import Login from './pages/auth/login/login';
-import Home from './pages/home/home';
 import ProtectedRoute from './private/protected-route';
-import MainLayout from './layout/main-layout/main-layout';
-import NotFound from './pages/not-found/not-found';
 import SuperAdminLayout from './layout/super-admin-layout/super-admin-layout';
 import SuperAdminDashboard from './pages/super-admin/super-admin-dashboard';
-import AddAdmin from './pages/crud-pages/add-admin/add-admin';
+import AddAdmin from './crud-admins/add-admin/add-admin';
 import AdminLayout from './layout/admin-layout/admin-layout';
 import AdminDashboard from './pages/admin/admin-dashboard';
-import EditAdmin from './pages/crud-pages/edit-admin/edit-admin';
-import EditStore from './pages/crud-pages/edit-store/edit-store';
-import AddStore from './pages/crud-pages/add-store/add-store';
+import EditAdmin from './crud-admins/edit-admin/edit-admin';
+import EditStore from './crud-store/edit-store/edit-store';
+import AddStore from './crud-store/add-store/add-store';
 import StoreDashboard from './pages/store-dashboard/store-dashboard';
-import AddDebtor from './pages/crud-pages/add-debtor/add-debtor';
+import AddDebtor from './crud-debtor/add-debtor/add-debtor';
 import StoreLayout from './layout/store-layout/store-layout';
 import AdminProfile from './pages/admin-profile/admin-profile';
-import EditDebtor from './pages/crud-pages/edit-debtor/edit-debtor';
+import EditDebtor from './crud-debtor/edit-debtor/edit-debtor';
 
 function App() {
   return (
@@ -25,8 +22,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
-
-        {/* super-admin */}
 
         <Route
           path="/super-admin"
@@ -47,8 +42,6 @@ function App() {
           <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
-        {/* admin */}
-
         <Route
           path="/admin"
           element={
@@ -66,8 +59,6 @@ function App() {
           <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
-        {/* store pages */}
-
         <Route
           path="/store-dashboard"
           element={
@@ -79,19 +70,6 @@ function App() {
           <Route index element={<StoreDashboard />} />
           <Route path="add-debtor" element={<AddDebtor />} />
           <Route path="edit-debtor/:id" element={<EditDebtor />} />
-        </Route>
-
-        {/* pages */}
-        <Route path="/" element={<MainLayout />}>
-          <Route
-            index
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

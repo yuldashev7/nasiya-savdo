@@ -5,12 +5,26 @@ import { toast } from 'react-toastify';
 import UseDeleteStore from '../../crud-store/mutation/use-delete-store';
 import { useState } from 'react';
 import { useAuth } from '../../hooks/use-auth/use-auth';
+import OptionModal from '../option-modal/option-modal';
 
 const Storetable = ({ dataSource, loading }: tableT) => {
   const navigate = useNavigate();
   const [loadingId, setLoadingID] = useState<string | null>(null);
   const { mutate: deleteAdmin } = UseDeleteStore();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { user } = useAuth();
+
+  const handleShowModal = (id: string) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedId(null);
+  };
+
   const handleDelete = (id: string) => {
     setLoadingID(id);
     deleteAdmin(id, {
@@ -60,16 +74,9 @@ const Storetable = ({ dataSource, loading }: tableT) => {
       key: 'phoneNumber',
       width: '180px',
     },
+
     {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: '130px',
-      render: (text: string | undefined) =>
-        text ? new Date(text).toLocaleDateString() : '—',
-    },
-    {
-      title: 'Updated At',
+      title: 'Created',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
       width: '130px',
@@ -81,6 +88,7 @@ const Storetable = ({ dataSource, loading }: tableT) => {
       width: '160px',
       render: (_: any, record: adminT) => (
         <div className="flex items-center gap-[10px]">
+          <Button onClick={() => handleShowModal(record.id)}>Options</Button>
           <Button
             className="w-[70px]"
             type="primary"
@@ -128,6 +136,11 @@ const Storetable = ({ dataSource, loading }: tableT) => {
           total: dataSource.length,
         }}
         scroll={{ x: '1200px' }}
+      />
+      <OptionModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        storeId={selectedId}
       />
     </div>
   );

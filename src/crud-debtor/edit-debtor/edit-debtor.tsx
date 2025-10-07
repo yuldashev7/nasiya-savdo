@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDebtorById } from '../../../crud-debtor/query/use-get-debtor-by-id';
-import { useEditDebtor } from '../../../crud-debtor/mutation/use-edit-debtor';
+import { useGetDebtorById } from '../query/use-get-debtor-by-id';
+import { useEditDebtor } from '../mutation/use-edit-debtor';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-import { useAuth } from '../../../hooks/use-auth/use-auth';
-import type { debtorT, inputErrT } from '../../../types/types';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import type { debtorT, inputErrT } from '../../types/types';
 import { toast } from 'react-toastify';
 import { Button, Form, Input, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -52,12 +52,10 @@ const EditDebtor = () => {
 
     const formData = new FormData();
 
-    // formData.append('id', id!);
     formData.append('fullName', values.fullName || '');
     formData.append('address', values.address || '');
     formData.append('description', values.description || '');
     formData.append('phoneNumber', values.phoneNumber || '');
-    // formData.append('storeId', storeId);
 
     if ((values.imageDebtor as any)?.[0]?.originFileObj) {
       formData.append(
@@ -77,6 +75,7 @@ const EditDebtor = () => {
         onError: (err: inputErrT) => {
           toast.error('Xatolik yuz berdi');
           handleError(err.data?.errors || {});
+          navigate('/store-dashboard');
           setLoading(false);
         },
       }

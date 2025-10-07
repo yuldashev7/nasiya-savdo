@@ -29,7 +29,6 @@ const Login = () => {
       let token;
       let role;
       let storeId;
-
       if (values.username.includes('@')) {
         res = await request.post('/store/signin', {
           email: values.username,
@@ -142,7 +141,10 @@ const Login = () => {
         <div className="text-center mt-4 max-w-md">
           <p className="text-sm leading-[140%] text-gray-600">
             Hisobingiz yo'q bo'lsa, tizimga kirish huquqini olish uchun
-            <a className="underline text-primary ml-1 mr-1" href="#">
+            <a
+              className="underline text-primary ml-1 mr-1"
+              href="tel:+998996938306 "
+            >
               do'kon administratori
             </a>
             bilan bog'laning.

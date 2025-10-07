@@ -128,3 +128,9 @@ export interface PasswordT {
   username?: string;
   email?: string;
 }
+
+export interface OptionModalT {
+  isOpen: boolean;
+  onClose: () => void;
+  storeId: string | null;
+}

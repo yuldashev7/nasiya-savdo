@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEditAdmin } from '../../../crud-admins/mutation/use-edit-admin';
+import { useEditAdmin } from '../mutation/use-edit-admin';
 import { useEffect, useState } from 'react';
-import type { inputErrT } from '../../../types/types';
 import { Button, Form, Input, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import { useGetAdminById } from '../../../crud-admins/query/use-get-admin-by-id';
+import { useGetAdminById } from '../query/use-get-admin-by-id';
+import type { inputErrT } from '../../types/types';
 
 const EditAdmin = () => {
   const { id } = useParams<{ id: string }>();

@@ -18,7 +18,7 @@ const StoreType = ({ onClose }: { onClose: () => void }) => {
     sendEmail(values, {
       onSuccess: (data: any) => {
         if (data?.otp) {
-          alert(`Emailga kelgan kod ${data?.otp}`);
+          alert(`Emailga kelgan kod: ${data?.otp}`);
         }
         setSavedEmail(values.email);
         setStep('OTP');

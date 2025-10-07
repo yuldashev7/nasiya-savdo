@@ -1,11 +1,11 @@
 import { Button, Input, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useCreateAdmin } from '../../../crud-admins/mutation/use-create-admin';
+import { useCreateAdmin } from '../mutation/use-create-admin';
 import { toast } from 'react-toastify';
 import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
-import type { adminT, inputErrT } from '../../../types/types';
+import type { adminT, inputErrT } from '../../types/types';
 
 const AddAdmin = () => {
   const navigate = useNavigate();

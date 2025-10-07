@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify';
-import CustomeForm from '../../../components/form/form';
-import { useCreateDebtor } from '../../../crud-debtor/mutation/use-create-debtor';
+import CustomeForm from '../../components/form/form';
+import { useCreateDebtor } from '../mutation/use-create-debtor';
 import { Button, Form, Input, Select, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import type { debtorT, storeT } from '../../../types/types';
-import { useAuth } from '../../../hooks/use-auth/use-auth';
-import { useGetStore } from '../../../crud-store/query/use-get-store';
+import type { debtorT, storeT } from '../../types/types';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import { useGetStore } from '../../crud-store/query/use-get-store';
 
 const AddDebtor = () => {
   const navigate = useNavigate();

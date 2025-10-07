@@ -1,12 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEditStore } from '../../../crud-store/mutation/use-edit-store';
-import { useGetStoreById } from '../../../crud-store/query/use-get-store-by-id';
+import { useEditStore } from '../mutation/use-edit-store';
+import { useGetStoreById } from '../query/use-get-store-by-id';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-import type { adminT, inputErrT } from '../../../types/types';
+
 import { toast } from 'react-toastify';
 import { Button, Form, Input, InputNumber } from 'antd';
-import { useAuth } from '../../../hooks/use-auth/use-auth';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import type { adminT, inputErrT } from '../../types/types';
 
 const EditStore = () => {
   const { id } = useParams<{ id: string }>();
