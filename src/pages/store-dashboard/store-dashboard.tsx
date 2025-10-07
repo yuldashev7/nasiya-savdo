@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/use-auth/use-auth';
 import { useDeleteDebtor } from '../../crud-debtor/mutation/use-delete-debtor';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import LogOutIcon from '../../assets/icons/log-out-icon';
 
 const StoreDashboard = () => {
   const { data, isLoading } = useGetDebtor();
@@ -18,7 +19,6 @@ const StoreDashboard = () => {
 
   const handleDelete = (id: any) => {
     setLoadingID(id);
-    console.log('deleteId', id);
 
     deleteDebtor(id, {
       onSuccess: () => {
@@ -51,7 +51,14 @@ const StoreDashboard = () => {
       navigate(`/super-admin/edit-debtor/${id}`);
     }
   };
-  console.log(data);
+
+  const removeToken = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('storeId');
+    navigate('/login');
+    toast.success('Tizimdan muvaffaqqiyatli chiqdingiz');
+  };
 
   const mappedData: debtorT[] = data ?? [];
 
@@ -137,18 +144,26 @@ const StoreDashboard = () => {
   ];
 
   return (
-    <div className="mt-[50px]">
-      <Button
-        type="primary"
-        onClick={handleNavigate}
-        className={`mb-[40px] ml-[20px] !text-[12px] !font-[500] ${
-          user?.role === 'SUPER ADMIN' || user?.role === 'ADMIN'
-            ? 'mt-[-40px]'
-            : 'mt-[5]'
-        }`}
-      >
-        Qarzdor Qo'shish
-      </Button>
+    <div className={`${user?.role === 'STORE' ? 'mt-[50px]' : ''}`}>
+      <div className="flex justify-between">
+        <Button
+          type="primary"
+          onClick={handleNavigate}
+          className={`mb-[40px] ml-[20px] !text-[12px] !font-[500]`}
+        >
+          Qarzdor Qo'shish
+        </Button>
+        {user?.role === 'STORE' && (
+          <Button
+            danger
+            onClick={removeToken}
+            className="mr-7 sm:py-2 lg:p-4 flex items-center gap-2"
+          >
+            <LogOutIcon />
+            Chiqish
+          </Button>
+        )}
+      </div>
       <Table
         dataSource={mappedData}
         columns={columns}

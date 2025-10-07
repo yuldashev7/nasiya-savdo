@@ -49,19 +49,20 @@ const CustomeTable = ({ dataSource, loading }: tableT) => {
       width: '25%',
       render: (_: any, record: adminT) => {
         return (
-          <div className="flex items-center gap-[20px]">
+          <div className="flex items-center gap-[20px] ">
+            <Button
+              className="w-[80px]"
+              type="primary"
+              onClick={() => navigate(`/super-admin/admin/${record.id}`)}
+            >
+              EDIT
+            </Button>
             <Button
               danger
               loading={loadingId == record.id}
               onClick={() => handleDelete(record.id)}
             >
               DELETE
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => navigate(`/super-admin/admin/${record.id}`)}
-            >
-              EDIT
             </Button>
           </div>
         );

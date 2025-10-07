@@ -17,7 +17,7 @@ request.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (err) {
-      console.error('Token parse error:', err);
+      console.log('Token parse error:', err);
     }
 
     return config;

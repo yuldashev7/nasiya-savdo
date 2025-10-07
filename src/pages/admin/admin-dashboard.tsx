@@ -35,7 +35,7 @@ const AdminDashboard = () => {
               : '/admin/add-store'
           )
         }
-        className="mb-[20px] sm:w-[90px] sm:!text-[12px] sm:!font-[500]"
+        className="mb-[20px] sm:w-[100px] sm:!text-[12px] sm:!font-[500]"
       >
         Do'kon Qo'shish
       </Button>

@@ -6,12 +6,11 @@ import { useForm } from 'antd/es/form/Form';
 import { useAuth } from '../../../hooks/use-auth/use-auth';
 import type { debtorT, inputErrT } from '../../../types/types';
 import { toast } from 'react-toastify';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 const EditDebtor = () => {
   const { id } = useParams<{ id: string }>();
-  console.log('param id', id);
-
   const { data: debtor } = useGetDebtorById(id!);
   const { mutate } = useEditDebtor();
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ const EditDebtor = () => {
   useEffect(() => {
     if (debtor) {
       form.setFieldsValue({
-        imagesDebtor: debtor.imagesDebtor,
+        imageDebtor: debtor.imagesDebtor,
         fullName: debtor.fullName,
         address: debtor.address,
         description: debtor.description,
@@ -34,6 +33,10 @@ const EditDebtor = () => {
   const handleEditnavigate = () => {
     if (user?.role === 'STORE') {
       return navigate('/store-dashboard');
+    } else if (user?.role === 'ADMIN') {
+      return navigate('/admin/store-dashboard');
+    } else if (user?.role === 'SUPER ADMIN') {
+      return navigate('/super-admin/store-dashboard');
     }
   };
 
@@ -46,32 +49,44 @@ const EditDebtor = () => {
   };
   const onFinish = (values: debtorT) => {
     setLoading(true);
-    const payload = {
-      id: id!,
-      imageDebtor: values.imageDebtor,
-      fullName: values.fullName,
-      address: values.address,
-      description: values.description,
-      phoneNumber: values.phoneNumber,
-    };
 
-    mutate(payload, {
-      onSuccess: () => {
-        toast.success('Qarzdor Yangilandi');
-        handleEditnavigate();
-        setLoading(false);
-      },
-      onError: (err: inputErrT) => {
-        handleError(err.data?.errors || {});
-        setLoading(false);
-      },
-    });
+    const formData = new FormData();
+
+    // formData.append('id', id!);
+    formData.append('fullName', values.fullName || '');
+    formData.append('address', values.address || '');
+    formData.append('description', values.description || '');
+    formData.append('phoneNumber', values.phoneNumber || '');
+    // formData.append('storeId', storeId);
+
+    if ((values.imageDebtor as any)?.[0]?.originFileObj) {
+      formData.append(
+        'imageDebtor',
+        (values.imageDebtor as any)[0].originFileObj
+      );
+    }
+
+    mutate(
+      { id: id!, formData },
+      {
+        onSuccess: () => {
+          toast.success('Qarzdor Yangilandi');
+          handleEditnavigate();
+          setLoading(false);
+        },
+        onError: (err: inputErrT) => {
+          toast.error('Xatolik yuz berdi');
+          handleError(err.data?.errors || {});
+          setLoading(false);
+        },
+      }
+    );
   };
 
   return (
     <div className="px-[10px]">
       <div className="mt-[20px] mb-[40px]">
-        <Button onClick={() => handleEditnavigate}>Ortga Qaytish</Button>
+        <Button onClick={handleEditnavigate}>Ortga Qaytish</Button>
       </div>
 
       <Form form={form} onFinish={onFinish} layout="vertical">
@@ -122,6 +137,26 @@ const EditDebtor = () => {
           }}
         >
           <Input maxLength={12} addonBefore="+998" placeholder="90-123-45-67" />
+        </Form.Item>
+
+        <Form.Item
+          label="Rasm"
+          name="imageDebtor"
+          rules={[{ required: true, message: 'Rasim yuklash shart' }]}
+          valuePropName="fileList"
+          getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+        >
+          <Upload
+            listType="picture-card"
+            maxCount={1}
+            accept="image/*"
+            beforeUpload={() => false}
+          >
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Rasm yuklash</div>
+            </div>
+          </Upload>
         </Form.Item>
 
         <Form.Item>

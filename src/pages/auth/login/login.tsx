@@ -35,7 +35,6 @@ const Login = () => {
           email: values.username,
           password: values.password,
         });
-        console.log(res);
 
         token = res.data.data.accessToken;
         storeId = res.data.data.id;
@@ -58,9 +57,6 @@ const Login = () => {
       localStorage.setItem('role', role);
       localStorage.setItem('storeId', storeId);
 
-      console.log('role', role);
-      console.log('storeId', storeId);
-
       toast.success('Tizimga muvaffaqiyatli kirdingiz!');
 
       if (role == 'SUPER ADMIN') {
@@ -73,7 +69,6 @@ const Login = () => {
         toast.info('Admin paneliga URL orqali kiring!');
       }
     } catch (err: any) {
-      console.log('role error', err);
       form.setFields([
         {
           name: 'username',

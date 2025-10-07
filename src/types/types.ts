@@ -78,7 +78,7 @@ export interface inputErrT {
 }
 
 export interface EditAdminPayload {
-  id: string;
+  id?: string;
   username?: string;
   password?: string;
   email?: string;
@@ -104,13 +104,6 @@ export interface debtorT {
   imageDebtor?: { imageUrl: string }[];
   imagesDebtor?: { imageUrl: string }[];
   createdAt: string;
-  // imageDebt: string;
-  // monthlySum?: number;
-  // remnant?: number;
-  // product: string;
-  // date: string;
-  // period: number;
-  // sum: number;
 }
 
 export type customeFormT = {

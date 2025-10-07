@@ -104,16 +104,6 @@ const AddAdmin = () => {
           <Input placeholder="Email kiriting" />
         </Form.Item>
 
-        {/* <Form.Item
-          label="Role"
-          name="role"
-          rules={[{ required: true, message: 'Role tanlanishi shart' }]}
-        >
-          <Select placeholder="Role tanlang">
-            <Option value="ADMIN">ADMIN</Option>
-          </Select>
-        </Form.Item> */}
-
         <Form.Item name="role" hidden>
           <Input />
         </Form.Item>

@@ -7,7 +7,6 @@ import MainLayout from './layout/main-layout/main-layout';
 import NotFound from './pages/not-found/not-found';
 import SuperAdminLayout from './layout/super-admin-layout/super-admin-layout';
 import SuperAdminDashboard from './pages/super-admin/super-admin-dashboard';
-import SellerDashboard from './pages/seller/seller-dashboard';
 import AddAdmin from './pages/crud-pages/add-admin/add-admin';
 import AdminLayout from './layout/admin-layout/admin-layout';
 import AdminDashboard from './pages/admin/admin-dashboard';
@@ -40,12 +39,12 @@ function App() {
           <Route index element={<SuperAdminDashboard />} />
           <Route path="add-admin" element={<AddAdmin />} />
           <Route path="admin/:id" element={<EditAdmin />} />
-          <Route path="seller-dashboard" element={<SellerDashboard />} />
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="add-store" element={<AddStore />} />
           <Route path="edit-store/:id" element={<EditStore />} />
           <Route path="store-dashboard" element={<StoreDashboard />} />
           <Route path="add-debtor" element={<AddDebtor />} />
+          <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
         {/* admin */}
@@ -64,6 +63,7 @@ function App() {
           <Route path="store-dashboard" element={<StoreDashboard />} />
           <Route path="add-debtor" element={<AddDebtor />} />
           <Route path="admin-profile" element={<AdminProfile />} />
+          <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
         {/* store pages */}

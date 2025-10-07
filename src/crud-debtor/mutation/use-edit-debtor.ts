@@ -1,10 +1,27 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { request } from '../../config/data/request';
-import type { debtorT, EditAdminPayload, inputErrT } from '../../types/types';
 
 export const useEditDebtor = () => {
-  return useMutation<debtorT, inputErrT, EditAdminPayload>({
-    mutationFn: ({ id, ...data }) =>
-      request.patch(`/debtor/${id}`, data).then((res) => res.data.data),
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      formData,
+    }: {
+      id: string;
+      formData: FormData;
+    }) => {
+      return request
+        .patch(`/debtor/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => res.data.data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['debtor'] });
+    },
   });
 };

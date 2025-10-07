@@ -26,8 +26,6 @@ const AddDebtor = () => {
   };
 
   const onSubmit = (values: Omit<debtorT, 'id'>) => {
-    console.log(values.storeId);
-
     const formData = new FormData();
 
     let storeId: any;
@@ -48,7 +46,6 @@ const AddDebtor = () => {
     formData.append('description', values.description || '');
     formData.append('phoneNumber', values.phoneNumber || '');
     formData.append('storeId', storeId);
-    console.log(values);
 
     if ((values.imageDebtor as any)?.[0]?.originFileObj) {
       formData.append(
@@ -106,28 +103,24 @@ const AddDebtor = () => {
               rules={[
                 { required: true, message: 'Telefon raqam kiritilishi shart' },
                 {
-                  pattern: /^\d{2}-\d{3}-\d{2}-\d{2}$/,
+                  pattern: /^\+998-\d{2}-\d{3}-\d{2}-\d{2}$/,
                   message: 'Telefon raqam noto‘g‘ri formatda',
                 },
               ]}
               normalize={(value: string) => {
-                if (!value) return value;
-                let digits = value.replace(/\D/g, '');
-                let formatted = '';
+                if (!value) return '';
+                const digits = value.replace(/\D/g, '');
+                let formatted = '+998';
 
-                if (digits.length > 0) formatted += digits.slice(0, 2);
-                if (digits.length >= 3) formatted += '-' + digits.slice(2, 5);
-                if (digits.length >= 6) formatted += '-' + digits.slice(5, 7);
-                if (digits.length >= 8) formatted += '-' + digits.slice(7, 9);
+                if (digits.length > 3) formatted += '-' + digits.slice(3, 5);
+                if (digits.length > 5) formatted += '-' + digits.slice(5, 8);
+                if (digits.length > 8) formatted += '-' + digits.slice(8, 10);
+                if (digits.length > 10) formatted += '-' + digits.slice(10, 12);
 
                 return formatted;
               }}
             >
-              <Input
-                maxLength={12}
-                addonBefore="+998"
-                placeholder="90-123-45-67"
-              />
+              <Input maxLength={17} placeholder="+998-90-123-45-67" />
             </Form.Item>
 
             <Form.Item

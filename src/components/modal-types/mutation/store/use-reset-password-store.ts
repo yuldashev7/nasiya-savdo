@@ -5,7 +5,7 @@ export const useResetPasswordStore = () => {
   return useMutation({
     mutationFn: (payload: { email: string; newPassword: string }) =>
       request
-        .patch('/store/reset-password', payload)
+        .post('/store/reset-password', payload)
         .then((res) => res.data.data),
   });
 };

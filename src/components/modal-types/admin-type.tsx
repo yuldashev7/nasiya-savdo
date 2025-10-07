@@ -14,8 +14,6 @@ const AdminType = ({ onClose }: { onClose: () => void }) => {
   const { mutate: resetPassword } = useResetPasswordAdmin();
 
   const handleEmail = (values: { email: string }) => {
-    console.log('valuesss', values);
-
     setLoading(true);
     sendEmail(values, {
       onSuccess: (data: any) => {

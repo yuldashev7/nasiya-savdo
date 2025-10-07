@@ -83,14 +83,6 @@ const Storetable = ({ dataSource, loading }: tableT) => {
         <div className="flex items-center gap-[10px]">
           <Button
             className="w-[70px]"
-            danger
-            loading={loadingId == record.id}
-            onClick={() => handleDelete(record.id)}
-          >
-            Delete
-          </Button>
-          <Button
-            className="w-[70px]"
             type="primary"
             onClick={() =>
               navigate(
@@ -101,6 +93,14 @@ const Storetable = ({ dataSource, loading }: tableT) => {
             }
           >
             Edit
+          </Button>
+          <Button
+            className="w-[70px]"
+            danger
+            loading={loadingId == record.id}
+            onClick={() => handleDelete(record.id)}
+          >
+            Delete
           </Button>
         </div>
       ),

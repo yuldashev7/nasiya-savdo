@@ -47,7 +47,7 @@ const AdminLayout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     navigate('/login');
-    toast.success('Tizimdan muvaffaqiyatli chiqdingiz');
+    toast.success('Tizimdan muvaffaqqiyatli chiqdingiz');
   };
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -100,7 +100,7 @@ const AdminLayout = () => {
               className="mr-7 sm:py-2 lg:p-4 flex items-center gap-2"
             >
               <LogOutIcon />
-              LogOut
+              Chiqish
             </Button>
           </Header>
 

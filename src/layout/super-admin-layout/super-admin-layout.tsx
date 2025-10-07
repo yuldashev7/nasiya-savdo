@@ -101,7 +101,7 @@ const SuperAdminLayout = () => {
               className="mr-7 sm:py-2 lg:p-4 flex items-center gap-2"
             >
               <LogOutIcon />
-              LogOut
+              Chiqish
             </Button>
           </Header>
 
