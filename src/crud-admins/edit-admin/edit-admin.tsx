@@ -1,20 +1,20 @@
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { useForm } from 'antd/es/form/Form';
+import { Button, Form, Input, Select } from 'antd';
+import type { inputErrT } from '../../types/types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEditAdmin } from '../mutation/use-edit-admin';
-import { useEffect, useState } from 'react';
-import { Button, Form, Input, Select } from 'antd';
-import { useForm } from 'antd/es/form/Form';
-import { toast } from 'react-toastify';
 import { useGetAdminById } from '../query/use-get-admin-by-id';
-import type { inputErrT } from '../../types/types';
 
 const EditAdmin = () => {
+  const [form] = useForm();
+  const { Option } = Select;
+  const navigate = useNavigate();
+  const { mutate } = useEditAdmin();
   const { id } = useParams<{ id: string }>();
   const { data: admin } = useGetAdminById(id!);
-  const { mutate } = useEditAdmin();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const { Option } = Select;
-  const [form] = useForm();
 
   useEffect(() => {
     if (admin) {

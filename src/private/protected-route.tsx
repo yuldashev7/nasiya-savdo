@@ -13,14 +13,14 @@ const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
     return <Navigate to={'/unauthorized'} replace />;
   }
 
-  if (window.location.pathname === '/') {
-    if (role?.toUpperCase() === 'SUPER ADMIN')
-      return <Navigate to={'/super-admin'} replace />;
-    if (role?.toUpperCase() === 'ADMIN')
-      return <Navigate to={'/admin'} replace />;
-    if (role?.toUpperCase() === 'STORE')
-      return <Navigate to={'/store-dashboard'} replace />;
-  }
+  // if (window.location.pathname === '/') a{
+  //   if (role?.toUpperCase() === 'SUPER ADMIN')
+  //     return <Navigate to={'/super-admin'} replace />;
+  //   if (role?.toUpperCase() === 'ADMIN')
+  //     return <Navigate to={'/admin'} replace />;
+  //   if (role?.toUpperCase() === 'STORE')
+  //     return <Navigate to={'/store-dashboard'} replace />;
+  // }
 
   return children;
 };

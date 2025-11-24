@@ -1,19 +1,19 @@
-import { Button, Table, Tag } from 'antd';
-import type { adminT, columnsT, tableT } from '../../types/types';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import UseDeleteStore from '../../crud-store/mutation/use-delete-store';
 import { useState } from 'react';
-import { useAuth } from '../../hooks/use-auth/use-auth';
+import { toast } from 'react-toastify';
+import { Button, Table, Tag } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import OptionModal from '../option-modal/option-modal';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import type { adminT, columnsT, tableT } from '../../types/types';
+import UseDeleteStore from '../../crud-store/mutation/use-delete-store';
 
 const Storetable = ({ dataSource, loading }: tableT) => {
-  const navigate = useNavigate();
-  const [loadingId, setLoadingID] = useState<string | null>(null);
-  const { mutate: deleteAdmin } = UseDeleteStore();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { mutate: deleteAdmin } = UseDeleteStore();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [loadingId, setLoadingID] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleShowModal = (id: string) => {
     setSelectedId(id);

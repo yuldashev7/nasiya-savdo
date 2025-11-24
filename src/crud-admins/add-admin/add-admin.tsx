@@ -1,16 +1,16 @@
-import { Button, Input, Form } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { useCreateAdmin } from '../mutation/use-create-admin';
-import { toast } from 'react-toastify';
-import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import { Button, Input, Form } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import { useNavigate } from 'react-router-dom';
 import type { adminT, inputErrT } from '../../types/types';
+import { useCreateAdmin } from '../mutation/use-create-admin';
 
 const AddAdmin = () => {
+  const [form] = useForm();
   const navigate = useNavigate();
   const { mutate } = useCreateAdmin();
-  const [form] = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleError = (errors: Record<string, string>) => {

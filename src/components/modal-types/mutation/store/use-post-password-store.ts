@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { request } from '../../../../config/data/request';
 import { useQueryClient } from '@tanstack/react-query';
+import { request } from '../../../../config/data/request';
 import type { PasswordT } from '../../../../types/types';
 
 export const usePostPasswordStore = () => {

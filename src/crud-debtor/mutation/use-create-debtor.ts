@@ -1,6 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { request } from '../../config/data/request';
-// import type { debtorT } from '../../types/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useCreateDebtor = () => {
   const queryClient = useQueryClient();

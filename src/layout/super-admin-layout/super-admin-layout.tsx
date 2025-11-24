@@ -4,14 +4,13 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   ShoppingOutlined,
-  // UserOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
-import React, { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import LogOutIcon from '../../assets/icons/log-out-icon';
+import React, { useState } from 'react';
 import logo from '../../assets/images/LOGO.png';
+import { Button, Layout, Menu, theme } from 'antd';
+import LogOutIcon from '../../assets/icons/log-out-icon';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
 

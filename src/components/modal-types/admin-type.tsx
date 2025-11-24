@@ -1,17 +1,17 @@
-import { toast } from 'react-toastify';
-import { usePostPassword } from './mutation/admin/use-post-password-admin';
-import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { Button, Form, Input } from 'antd';
 import { useVerifyOtpAdmin } from './mutation/admin/use-verify-otp-admin';
+import { usePostPassword } from './mutation/admin/use-post-password-admin';
 import { useResetPasswordAdmin } from './mutation/admin/use-reset-password-admin';
 
 const AdminType = ({ onClose }: { onClose: () => void }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
-  const [savedEmail, setSavedEmail] = useState<string | null>(null);
   const { mutate: sendEmail } = usePostPassword();
   const { mutate: verifyOtp } = useVerifyOtpAdmin();
+  const [loading, setLoading] = useState<boolean>(false);
   const { mutate: resetPassword } = useResetPasswordAdmin();
+  const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
 
   const handleEmail = (values: { email: string }) => {
     setLoading(true);

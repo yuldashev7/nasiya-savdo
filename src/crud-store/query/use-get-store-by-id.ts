@@ -1,6 +1,6 @@
-import { request } from '../../config/data/request';
-import { useQuery } from '@tanstack/react-query';
 import type { adminT } from '../../types/types';
+import { useQuery } from '@tanstack/react-query';
+import { request } from '../../config/data/request';
 
 export const useGetStoreById = (id: string) => {
   return useQuery<adminT>({

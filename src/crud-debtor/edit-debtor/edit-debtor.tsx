@@ -1,22 +1,22 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDebtorById } from '../query/use-get-debtor-by-id';
-import { useEditDebtor } from '../mutation/use-edit-debtor';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-import { useAuth } from '../../hooks/use-auth/use-auth';
-import type { debtorT, inputErrT } from '../../types/types';
-import { toast } from 'react-toastify';
-import { Button, Form, Input, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Upload } from 'antd';
+import { useAuth } from '../../hooks/use-auth/use-auth';
+import { useNavigate, useParams } from 'react-router-dom';
+import type { debtorT, inputErrT } from '../../types/types';
+import { useEditDebtor } from '../mutation/use-edit-debtor';
+import { useGetDebtorById } from '../query/use-get-debtor-by-id';
 
 const EditDebtor = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data: debtor } = useGetDebtorById(id!);
-  const { mutate } = useEditDebtor();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
   const [form] = useForm();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { mutate } = useEditDebtor();
+  const { id } = useParams<{ id: string }>();
+  const { data: debtor } = useGetDebtorById(id!);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (debtor) {

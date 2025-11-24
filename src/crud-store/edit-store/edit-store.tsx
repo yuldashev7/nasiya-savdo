@@ -1,22 +1,21 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEditStore } from '../mutation/use-edit-store';
-import { useGetStoreById } from '../query/use-get-store-by-id';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
-
-import { toast } from 'react-toastify';
 import { Button, Form, Input, InputNumber } from 'antd';
 import { useAuth } from '../../hooks/use-auth/use-auth';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEditStore } from '../mutation/use-edit-store';
 import type { adminT, inputErrT } from '../../types/types';
+import { useGetStoreById } from '../query/use-get-store-by-id';
 
 const EditStore = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data: store } = useGetStoreById(id!);
-  const { mutate } = useEditStore();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
   const [form] = useForm();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { mutate } = useEditStore();
+  const { id } = useParams<{ id: string }>();
+  const { data: store } = useGetStoreById(id!);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (store) {

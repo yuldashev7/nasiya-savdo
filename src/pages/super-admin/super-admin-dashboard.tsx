@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import CustomeTable from '../../components/custome-table/custome-table';
-import { useGetAdmin } from '../../crud-admins/query/use-get-admin';
 import type { adminT } from '../../types/types';
+import { useGetAdmin } from '../../crud-admins/query/use-get-admin';
+import CustomeTable from '../../components/custome-table/custome-table';
 
 const SuperAdminDashboard = () => {
   const { data, isLoading } = useGetAdmin();

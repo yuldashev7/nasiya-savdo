@@ -1,14 +1,15 @@
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Table, Tag } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import type { adminT, columnsT, tableT } from '../../types/types';
 import { useDeleteAdmin } from '../../crud-admins/mutation/use-delete-admin';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const CustomeTable = ({ dataSource, loading }: tableT) => {
   const { mutate: deleteAdmin } = useDeleteAdmin();
   const [loadingId, setLoadingID] = useState<string | null>(null);
   const navigate = useNavigate();
+
   const handleDelete = (id: string) => {
     setLoadingID(id);
     deleteAdmin(id, {

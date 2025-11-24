@@ -1,6 +1,6 @@
 export const useAuth = () => {
-  const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
+  const token = localStorage.getItem('token');
 
   return {
     user: token

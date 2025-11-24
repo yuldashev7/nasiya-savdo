@@ -1,14 +1,14 @@
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import type { dataT } from '../../types/types';
-import { useGetStore } from '../../crud-store/query/use-get-store';
-import Storetable from '../../components/store-table/store-table';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use-auth/use-auth';
+import Storetable from '../../components/store-table/store-table';
+import { useGetStore } from '../../crud-store/query/use-get-store';
 
 const AdminDashboard = () => {
-  const { data, isLoading } = useGetStore();
-  const navigate = useNavigate();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetStore();
 
   const mappedData: dataT[] = Array.isArray(data)
     ? data.map((item: dataT) => ({

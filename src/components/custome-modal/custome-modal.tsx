@@ -1,5 +1,5 @@
-import { Button, Modal } from 'antd';
 import { useState } from 'react';
+import { Button, Modal } from 'antd';
 import AdminType from '../modal-types/admin-type';
 import StoreType from '../modal-types/store-type';
 

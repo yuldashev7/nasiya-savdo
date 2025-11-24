@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { request } from '../../config/data/request';
 import type { debtorT } from '../../types/types';
+import { request } from '../../config/data/request';
 
 export const useGetDebtorById = (id: string) => {
   return useQuery<debtorT>({

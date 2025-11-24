@@ -1,17 +1,17 @@
-import { toast } from 'react-toastify';
-import { usePostPasswordStore } from './mutation/store/use-post-password-store';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Form, Input } from 'antd';
 import { useVerifyOtpStore } from './mutation/store/use-verify-otp-store';
+import { usePostPasswordStore } from './mutation/store/use-post-password-store';
 import { useResetPasswordStore } from './mutation/store/use-reset-password-store';
 
 const StoreType = ({ onClose }: { onClose: () => void }) => {
-  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
-  const [savedEmail, setSavedEmail] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const { mutate: sendEmail } = usePostPasswordStore();
   const { mutate: verifyOtp } = useVerifyOtpStore();
+  const { mutate: sendEmail } = usePostPasswordStore();
+  const [loading, setLoading] = useState<boolean>(false);
   const { mutate: resetPassword } = useResetPasswordStore();
+  const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
 
   const handleEmail = (values: { email: string }) => {
     setLoading(true);

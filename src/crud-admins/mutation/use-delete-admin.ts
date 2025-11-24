@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { request } from '../../config/data/request';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useDeleteAdmin = () => {
   const queryClient = useQueryClient();

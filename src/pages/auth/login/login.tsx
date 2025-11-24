@@ -1,19 +1,19 @@
+import React from 'react';
 import type { FormProps } from 'antd';
+import { toast } from 'react-toastify';
 import { Button, Form, Input } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/images/LOGO.png';
+import { request } from '../../../config/data/request';
 import LoginIcon from '../../../assets/icons/login-icon';
 import PasswordIcon from '../../../assets/icons/password-icon';
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import logo from '../../../assets/images/LOGO.png';
-import { toast } from 'react-toastify';
-import { request } from '../../../config/data/request';
-import { useForm } from 'antd/es/form/Form';
 import CustomeModal from '../../../components/custome-modal/custome-modal';
 
 const Login = () => {
+  const [form] = useForm();
   const navigate = useNavigate();
   const [loading, setloading] = React.useState(false);
-  const [form] = useForm();
 
   type FieldType = {
     username: string;
@@ -89,7 +89,7 @@ const Login = () => {
         <div className="flex flex-col items-center justify-center text-center">
           <img className="sm:mb-[20px]" src={logo} alt="img" />
           <h1 className="font-[700] text-[24px] text-#000">Dasturga kirish</h1>
-          <p className="font-[500] text-[16px] leading-[140$] text-gray-600 sm:mb-[30px]">
+          <p className="font-[500] text-[16px] leading-[140%] text-gray-600 sm:mb-[30px]">
             Iltimos, tizimga kirish uchun login va parolingizni kiriting.
           </p>
         </div>

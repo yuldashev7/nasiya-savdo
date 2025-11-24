@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { request } from '../../config/data/request';
 import type { adminT } from '../../types/types';
+import { request } from '../../config/data/request';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useCreateAdmin = () => {
   const queryClient = useQueryClient();
