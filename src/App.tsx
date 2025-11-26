@@ -13,7 +13,6 @@ import AddStore from './crud-store/add-store/add-store';
 import StoreDashboard from './pages/store-dashboard/store-dashboard';
 import AddDebtor from './crud-debtor/add-debtor/add-debtor';
 import StoreLayout from './layout/store-layout/store-layout';
-import AdminProfile from './pages/admin-profile/admin-profile';
 import EditDebtor from './crud-debtor/edit-debtor/edit-debtor';
 
 function App() {
@@ -56,7 +55,6 @@ function App() {
           <Route path="edit-store/:id" element={<EditStore />} />
           <Route path="store-dashboard" element={<StoreDashboard />} />
           <Route path="add-debtor" element={<AddDebtor />} />
-          <Route path="admin-profile" element={<AdminProfile />} />
           <Route path="edit-debtor/:id" element={<EditDebtor />} />
         </Route>
 
